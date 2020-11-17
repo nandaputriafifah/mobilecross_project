@@ -1,0 +1,33 @@
+<ion-content class="ion-padding">
+  <div class="ion-padding-start">
+    <h1>JELAJAH <br> BATIK NUSANTARA</h1>
+    <span>Jelajah ragam motif batik dari <br> berbagai Provinsi Indonesia</span>
+  </div>
+
+  <div class="ion-padding-start ion-padding-top">
+    <ion-text><b><br>Provinsi</b></ion-text>
+
+    <!-- This for showing images in slider   -->
+    <ion-slides [options]="sliderOpts">
+      <!--  Do the loop for showing images based on image name in assets/images/{image_name} -->
+      <!--  If you want to add another image in slider, -->
+      <!--  simply insert image name in array `let img of ['borobudur','{insert_image_name}']`-->
+      <!--  Name in array should be the same as image name in file assets/images -->
+      <ion-slide *ngFor="let img of ['borobudur', 'kalimantan', 'sumatera', 'banten']">
+        <img class="img-slider" src="assets/images/{{img}}.jpg">
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+
+
+  <!--  <ion-list>-->
+  <!--    <ion-item *ngFor="let batik of batiks">-->
+  <!--      <div class="ion-nowrap">-->
+  <!--        <ion-label>{{batik.batik_name}}</ion-label>-->
+  <!--        <ion-label>{{batik.province_name}}</ion-label>-->
+  <!--      </div>-->
+  <!--    </ion-item>-->
+  <!--  </ion-list>-->
+</ion-content>
+

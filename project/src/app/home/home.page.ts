@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {BatikService} from "./batik.service";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-home',

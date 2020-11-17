@@ -1,0 +1,50 @@
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+
+  color: #8c8c8c;
+
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 27px;
+  font-weight: 700;
+}
+
+span {
+  font-size: 17px;
+}
+
+ion-slides {
+  padding-top: 12px;
+}
+
+ion-slides:last-child{
+  margin-right: -50px;
+}
+
+// This for fix up margin left on the first preview of image in slide
+ion-slide:first-child {
+  margin-left: -33px;
+}
+
+// Custom image slider
+.img-slider {
+  object-fit: cover;
+
+  width: 140px;
+  height: 275px;
+
+  border-radius: 15px;
+  filter: brightness(70%);
+}
