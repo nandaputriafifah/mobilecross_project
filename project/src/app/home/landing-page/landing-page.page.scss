@@ -35,7 +35,23 @@ ion-slides:last-child{
 
 // This for fix up margin left on the first preview of image in slide
 ion-slide:first-child {
-  margin-left: -33px;
+  margin-left: -10px;
+}
+
+// Putting button into center
+ion-button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 280px;
+}
+
+ion-thumbnail {
+  width: 85px;
+  height: 75px;
+  img {
+    border-radius: 15px;
+  }
 }
 
 // Custom image slider
@@ -47,4 +63,10 @@ ion-slide:first-child {
 
   border-radius: 15px;
   filter: brightness(70%);
+}
+
+@media only screen and (max-width: 375px) {
+  ion-slide:first-child {
+    margin-left: -1px;
+  }
 }

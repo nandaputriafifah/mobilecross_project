@@ -14,7 +14,7 @@ export class LandingPagePage implements OnInit {
   // slidesPerView means showing two images (slides) per view
   sliderOpts = {
     slidesPerView: 2.2,
-    spaceBetween: -35
+    spaceBetween: 10
   }
 
   constructor(private batikService: BatikService) { }
