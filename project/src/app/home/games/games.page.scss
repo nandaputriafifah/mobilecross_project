@@ -1,0 +1,16 @@
+h1 {
+  font-size: 27px;
+  font-weight: 700;
+}
+
+span {
+  font-size: 17px;
+}
+
+// Putting button into center
+ion-button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 280px;
+}
