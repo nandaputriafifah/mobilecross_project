@@ -1,9 +1,33 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>games</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding">
 
-<ion-content>
+  <!--  Title and Subtitle  -->
+  <div class="ion-padding-start">
+    <h1><b>KUTIK</b></h1>
+    <h3>(Kuis Batik)<br></h3>
+    <span>Yuk mainkan permainan edukasi <br> seputar batik Nusantara!</span>
+  </div>
 
+  <!--  Card in Games -->
+  <ion-card>
+    <img src="assets/images/img-card-quiz-page.png">
+  </ion-card>
+
+  <!-- USER NOT LOGGED IN -->
+  <!-- isLoggedIn can be found in authentication.service.ts -->
+  <!-- isLoggedIn = false, means user hasn't logged in yet -->
+  <!-- If user not logged in, when press the button, should present alert to logged in/ register -->
+  <!-- presentAlert() can be found in games.page.ts -->
+  <ion-button
+          *ngIf="authService.isLoggedIn === false"
+          color="secondary"
+          (click)="presentAlert()">Mainkan sekarang!</ion-button>
+
+  <!-- USER LOGGED IN -->
+  <!-- isLoggedIn = true, means user has been logged in -->
+  <!-- If user already logged in, when user press the button, should redirect to game-detail -->
+  <ion-button
+          *ngIf="authService.isLoggedIn === true"
+          color="secondary"
+          href="/home/tabs/games/game-detail">Mainkan sekarang!</ion-button>
 </ion-content>
+

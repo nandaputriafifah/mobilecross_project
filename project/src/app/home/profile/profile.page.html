@@ -1,9 +1,25 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-title>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-label>{{userEmail}}</ion-label>
+
+  <!-- USER LOGGED IN -->
+  <!-- isLoggedIn = true, means user has been logged in -->
+  <!-- If user already logged in, display this -->
+  <ion-item *ngIf="authService.isLoggedIn === true">
+    <ion-button type="submit" (click)="authService.SignOut()" expand="block">Logout</ion-button>
+  </ion-item>
+
+  <!-- USER NOT LOGGED IN -->
+  <!-- isLoggedIn = false, means user hasn't logged in yet -->
+  <!-- If user hasn't logged in yet, display this -->
+  <ion-item *ngIf="authService.isLoggedIn === false">
+    <ion-button type="submit" href="/home/login">Masuk Sekarang</ion-button>
+  </ion-item>
+
 
 </ion-content>

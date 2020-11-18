@@ -28,7 +28,7 @@
     <br><br>
     <ion-text><b>Motif Batik</b></ion-text>
   </div>
-    <ion-card *ngFor="let batik of batiks">
+    <ion-card [routerLink]="['./', batik.batik_id]" *ngFor="let batik of batiks">
       <!-- Only shows 5 Batik in landing page -->
       <ion-item *ngIf="batik.batik_id <= 5" class="ion-no-padding" lines="none">
         <ion-thumbnail><img src="{{batik.batik_image}}"></ion-thumbnail>
