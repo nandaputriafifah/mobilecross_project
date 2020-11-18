@@ -11,6 +11,21 @@ import firebase from "firebase";
 export class AuthenticationService {
   userData: any;
 
+  // getting from database
+  user_id;
+  email;
+  username;
+
+  name;
+  id;
+
+  // getting data from users table
+  users_array = [];
+  usernames_table;
+  names_table;
+  emails_table;
+  password_table;
+
   constructor(
       public afStore: AngularFirestore,
       public ngFireAuth: AngularFireAuth,
@@ -35,8 +50,39 @@ export class AuthenticationService {
   }
 
   // Register user with email/password
-  RegisterUser(email, password) {
-    return this.ngFireAuth.createUserWithEmailAndPassword(email, password)
+  // RegisterUser(email, password, name, username) {
+  //   return this.ngFireAuth.createUserWithEmailAndPassword(email, password)
+  // }
+
+  RegisterUser(email, password, name, username) {
+    return firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
+      if (user) {
+        console.log(user);
+        this.user_id = user['user'].uid;
+        this.email = user['user'].email;
+
+        // inserting into database
+        firebase.database().ref('users/' + this.user_id).set({
+          names: name,
+          usernames: username,
+          emails: email,
+        }, (error) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('New User Saved');
+          }
+        });
+      }
+      return user;
+    }).catch((error) => {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorMessage);
+      return errorMessage;
+      // ...
+    });
   }
 
   // Email verification when new user register

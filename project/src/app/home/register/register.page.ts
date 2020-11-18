@@ -8,7 +8,6 @@ import {Router} from "@angular/router";
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
-
   constructor(
       public authService: AuthenticationService,
       public router: Router
@@ -17,10 +16,10 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
 
-  signUp(email, password){
-    this.authService.RegisterUser(email.value, password.value)
+  signUp(email, password, name, username){
+    this.authService.RegisterUser(email.value, password.value, name.value, username.value)
         .then((res) => {
-          // Do something here
+          // Do send verification email
           this.authService.SendVerificationMail()
           this.router.navigate(['/home/verify-email']);
         }).catch((error) => {

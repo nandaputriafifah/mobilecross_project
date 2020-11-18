@@ -8,13 +8,13 @@ import {AuthenticationService} from "../authentication.service";
 })
 export class ProfilePage implements OnInit {
   userEmail: string;
+  users: any;
 
   constructor(
       public authService: AuthenticationService
   ) { }
 
   ngOnInit() {
-
     this.authService.userDetails().subscribe(res => {
       console.log('res', res);
       if (res !== null) {

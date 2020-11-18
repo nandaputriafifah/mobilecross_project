@@ -5,12 +5,12 @@
 </ion-header>
 
 <ion-content>
-  <ion-label>{{userEmail}}</ion-label>
 
   <!-- USER LOGGED IN -->
   <!-- isLoggedIn = true, means user has been logged in -->
   <!-- If user already logged in, display this -->
   <ion-item *ngIf="authService.isLoggedIn === true">
+    <ion-label>{{userEmail}}</ion-label>
     <ion-button type="submit" (click)="authService.SignOut()" expand="block">Logout</ion-button>
   </ion-item>
 
