@@ -1,0 +1,96 @@
+<ion-content mode="ios">
+  <!-- Score and Question Description -->
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size="1.5">
+        <ion-buttons>
+          <ion-back-button class="text-title" mode="md" defaultHref="/home/tabs/games"></ion-back-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col size="9">
+        <div class="ion-text-center ion-padding text-score">
+          <ion-label class="text-title">SKOR: {{score}}</ion-label>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-slides #quizSlider
+                (ionSlidesDidLoad)="getIndexSlideChanged()"
+                (ionSlideWillChange)="getIndexSlideChanged()">
+    <ion-slide *ngFor="let quiz of quizes">
+      <div class="ion-text-center">
+        <ion-label class="text-title">Pertanyaan {{index}}/10</ion-label>
+        <ion-card>
+          <ion-card-header>
+           <img src="{{quiz.quiz_image}}">
+          </ion-card-header>
+          <ion-text class="text-question">
+            {{quiz.question}}
+          </ion-text>
+
+          <!-- Insert choices here -->
+          <ion-list>
+            <ion-radio-group name="quiz-batik" (ionChange)="choiceSelected($event)">
+
+              <ion-card class="card-choices">
+                <ion-item lines="none">
+                  <ion-label>{{quiz.choice1}}</ion-label>
+                  <ion-radio slot="start" value="{{quiz.choice1}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices">
+                <ion-item lines="none">
+                  <ion-label>{{quiz.choice2}}</ion-label>
+                  <ion-radio slot="start" value="{{quiz.choice2}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices">
+                <ion-item lines="none">
+                  <ion-label>{{quiz.choice3}}</ion-label>
+                  <ion-radio slot="start" value="{{quiz.choice3}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices">
+                <ion-item lines="none">
+                  <ion-label>{{quiz.choice4}}</ion-label>
+                  <ion-radio slot="start" value="{{quiz.choice4}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-item *ngIf="selectedChoice === quiz.answer">
+                <ion-label>ahahahhaha</ion-label>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+          <ion-button (click)="swipeNext()">Next</ion-button>
+        </ion-card>
+      </div>
+    </ion-slide>
+    </ion-slides>
+  </ion-grid>
+</ion-content>
+
+
+<!--<ion-header>-->
+<!--  <ion-toolbar class="Align" color="primary">-->
+<!--    <ion-title>Quiz</ion-title>-->
+<!--  </ion-toolbar>-->
+<!--</ion-header>-->
+
+<!--<ion-content>-->
+<!--  <ion-card>-->
+<!--    <ion-list *ngFor="let quiz of quiz_questions">-->
+<!--      <h3><b>{{ quiz.counter }}. {{ quiz.quiz_questions}}</b></h3>-->
+<!--      <ion-radio-group>-->
+<!--        <ion-item *ngFor="let tcf of quiz.quiz_answers">-->
+<!--          <ion-label>{{ tcf }}</ion-label>-->
+<!--          <ion-radio slot="start" value="{{ tcf }}"></ion-radio>-->
+<!--        </ion-item>-->
+<!--      </ion-radio-group>-->
+<!--    </ion-list>-->
+<!--  </ion-card>-->
+<!--</ion-content>-->
+

@@ -1,0 +1,31 @@
+ion-content {
+  --ion-background-color:#283618;
+}
+
+ion-card {
+  --ion-background-color: white;
+}
+
+ion-radio {
+  --color-checked: green;
+}
+
+.text-title {
+  color: white;
+}
+
+.text-score {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.text-question {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+}
+
+.card-choices {
+  height: 45px;
+  border-radius: 20px;
+}

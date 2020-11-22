@@ -44,8 +44,12 @@ const routes: Routes = [
     {
         path: 'list-province',
         loadChildren: () => import('./list-province/list-province.module').then( m => m.ListProvincePageModule)
-    }
+    },
 
+  {
+    path: 'game-detail',
+    loadChildren: () => import('./game-detail/game-detail.module').then( m => m.GameDetailPageModule)
+  }
 
 ];
 
@@ -53,5 +57,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-
 export class HomePageRoutingModule { }
