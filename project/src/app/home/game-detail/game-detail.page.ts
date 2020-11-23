@@ -10,10 +10,14 @@ import {IonSlides} from "@ionic/angular";
   styleUrls: ['./game-detail.page.scss'],
 })
 export class GameDetailPage implements OnInit {
-  quizes = [];
+  quizes: any;
   selectedChoice: string;
-  score: number;
+  selectedQuestion: string;
+  score: number = 0;
   index: number;
+  quizTimeLimit: number;
+  show: boolean;
+  doDisabled: boolean;
 
   @ViewChild('quizSlider') slide: IonSlides;
 
@@ -59,20 +63,45 @@ export class GameDetailPage implements OnInit {
       this.quizes = data;
       console.log(data);
     });
-    this.score = 0;
+    console.log('USER NIH', this.gameService.getUserId());
+    this.quizTimeLimit = 1;
+    this.doDisabled = false;
+    this.show = false;
   }
 
   swipeNext(){
     this.slide.slideNext();
   }
 
-  choiceSelected(event) {
+  // swipePrevious(){
+  //   this.slide.slidePrev();
+  // }
+
+  // stopTimeLimit() {
+  //   this.setPercentBar(1);
+  // }
+
+  choiceSelected(event, question) {
     console.log('====== CHOICE SELECTED', event.detail.value);
+    console.log('====== CHOICE DETAIL', event.detail);
     console.log('====== ANSWER', this.quizes);
     this.selectedChoice = event.detail.value;
-    // if (this.selectedChoice === this.quizes.answer) {
-    //   console.log('BENR');
+    this.selectedQuestion = question;
+    console.log('====== QUESTION', this.selectedQuestion);
+
+    // for (let questionLength = 0; questionLength < this.quizes.length; questionLength++) {
+    //   if (this.quizes[questionLength].question === this.selectedQuestion) {
+    //     for (let choiceLength = 0; choiceLength < this.quizes[questionLength].length; choiceLength++) {
+    //       console.log('QUISES LENGTHHH', this.quizes[questionLength].length);
+    //       if (this.selectedChoice === this.quizes[questionLength].answer) {
+    //         console.log('BENER');
+    //       } else {
+    //         console.log('SALAH');
+    //       }
+    //     }
+    //   }
     // }
+
   }
 
   getIndexSlideChanged() {
@@ -81,7 +110,67 @@ export class GameDetailPage implements OnInit {
       console.log(this.index);
     });
   }
+
+  getQuizResult() {
+    console.log('KE CLICKKK!!!');
+    console.log('SELECTED CHOICE', this.selectedChoice);
+    console.log('QUIZ', this.quizes);
+
+    for (let questionLength = 0; questionLength < this.quizes.length; questionLength++) {
+        if (this.selectedChoice === this.quizes[questionLength].answer) {
+          this.score = this.score + 10;
+          console.log('SCOREEE', this.score);
+        }
+    }
+    // if (this.quizes) {
+    //   for (let iter = 0; iter < this.quizes.length; iter++) {
+    //     if (this.quizes[iter].selectedChoice === this.quizes[iter].answer) {
+    //       console.log('BENER NIH=========');
+    //     }
+    //   }
+    // }
+  }
+
+  showAnswer() {
+    this.show = true;
+  }
+
+  hideAnswer() {
+    this.show = false;
+  }
+
+  disabledChoices() {
+    this.doDisabled = true;
+  }
+
+  enabledChoices() {
+    this.doDisabled = false;
+  }
+
+  // runTimeLimit() {
+  //   // console.log('RUN', this.selectedChoice);
+  //   // if (typeof this.selectedChoice === 'undefined') {
+  //   //   for (let index = 0; index <= 100; index++) {
+  //   //     if (typeof this.selectedChoice !== 'undefined'){
+  //   //       this.setPercentBar(0);
+  //   //       break;
+  //   //     }
+  //   //     this.setPercentBar(+index);
+  //   //   }
+  //   // } else if (typeof this.selectedChoice !== 'undefined'){
+  //   //   this.setPercentBar(0);
+  //   // }
+  // }
+
+  // setPercentBar(i) {
+  //   setTimeout(() => {
+  //     let apc = (i / 100)
+  //     console.log(apc);
+  //     this.quizTimeLimit = apc;
+  //   }, 150 * i);
+  // }
   //
+
 
   // pushToGameArray(question, answer, correct_answer, score_boolean) {
   //   this.quiz_array.push({

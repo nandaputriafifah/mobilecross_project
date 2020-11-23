@@ -12,6 +12,7 @@ export class GameService {
   // Database path for quiz
   private dbPath = '/quiz';
   quizRef: AngularFireList<Quiz> = null;
+  user_id;
   // // database = firebase.database().ref();
   //
   // // Get data from users table in firebase
@@ -45,9 +46,18 @@ export class GameService {
     return this.quizRef;
   }
 
-  // returnUserId() {
-  //   return this.users_id;
-  // }
+  getUserId() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User logged in already or has just logged in.
+        this.user_id = user.uid;
+        console.log('===USER ID===', this.user_id);
+        return this.user_id;
+      } else {
+        // User not logged in or has just logged out.
+      }
+    });
+  }
 
   // // quiz code
   // batikQuiz(quizId) {

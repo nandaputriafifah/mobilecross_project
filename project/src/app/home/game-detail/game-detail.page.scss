@@ -6,9 +6,47 @@ ion-card {
   --ion-background-color: white;
 }
 
+// Questions card for iphone 6/7/8 plus screen resolution
+@media only screen and (max-width: 414px) {
+  ion-card {
+    width: 380px;
+  }
+  .card-choices {
+    width: 350px;
+  }
+}
+
+// Questions card for iphone 6/7/8/X screen resolution
+@media only screen and (max-width: 375px) {
+  ion-card {
+    width: 330px;
+  }
+
+  .card-choices {
+    width: 300px;
+  }
+}
+
+// Questions card for iphone 5/SE screen resolution
+@media only screen and (max-width: 320px) {
+  ion-card {
+    width: 290px;
+  }
+
+  .card-choices {
+    width: 260px;
+  }
+}
+
 ion-radio {
   --color-checked: green;
 }
+
+ion-item:active {
+  background-color: green;
+  border-color: green;
+}
+
 
 .text-title {
   color: white;
@@ -20,7 +58,7 @@ ion-radio {
 }
 
 .text-question {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   color: black;
 }

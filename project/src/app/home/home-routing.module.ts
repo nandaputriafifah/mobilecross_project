@@ -49,7 +49,11 @@ const routes: Routes = [
   {
     path: 'game-detail',
     loadChildren: () => import('./game-detail/game-detail.module').then( m => m.GameDetailPageModule)
-  }
+  },
+    {
+        path: 'results',
+        loadChildren: () => import('./results/results.module').then( m => m.ResultsPageModule)
+    }
 
 ];
 
