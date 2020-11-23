@@ -16,11 +16,8 @@ export class GameDetailPage implements OnInit {
   selectedChoice: string;
   selectedQuestion: string;
   score: number = 0;
-
-  randomIndex = Math.floor(Math.random() * 10);
-  contoh;
-
   index: number;
+  quizTimeLimit: number;
   show: boolean;
   doDisabled: boolean;
   user_id: string;
@@ -52,8 +49,7 @@ export class GameDetailPage implements OnInit {
     ).subscribe(data => {
       this.quizes = data;
       firebase.database().ref('/quiz').on('value', () => {});
-      firebase.database().ref('/quiz').once('value').then(quiz => this.contoh = quiz.key)
-      console.log('CONTOH', this.contoh);
+      firebase.database().ref('/quiz').once('value', () => {});
     });
 
     this.gameService.getUserData().snapshotChanges().pipe(
