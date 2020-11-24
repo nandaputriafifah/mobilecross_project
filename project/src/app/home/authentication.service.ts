@@ -2,7 +2,7 @@ import {Injectable, NgZone} from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/auth";
 import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
 import {Router} from "@angular/router";
-import {User} from "./user";
+// import {User} from "./user";
 import firebase from "firebase";
 
 @Injectable({
@@ -115,37 +115,37 @@ export class AuthenticationService {
     return (user.emailVerified !== false) ? true : false;
   }
 
-  // Auth providers
-  AuthLogin(provider) {
-    return this.ngFireAuth.signInWithPopup(provider)
-        .then((result) => {
-          this.ngZone.run(() => {
-            this.router.navigate(['dashboard']);
-          })
-          this.SetUserData(result.user);
-        }).catch((error) => {
-          window.alert(error)
-        })
-  }
+  // // Auth providers
+  // AuthLogin(provider) {
+  //   return this.ngFireAuth.signInWithPopup(provider)
+  //       .then((result) => {
+  //         this.ngZone.run(() => {
+  //           this.router.navigate(['dashboard']);
+  //         })
+  //         this.SetUserData(result.user);
+  //       }).catch((error) => {
+  //         window.alert(error)
+  //       })
+  // }
 
-  // Store user in localStorage
-  SetUserData(user) {
-    const userRef: AngularFirestoreDocument<any> = this.afStore.doc(`users/${user.user_id}`);
-    const userData: User = {
-      user_id: user.user_id,
-      email: user.email,
-      name: user.name,
-      username: user.username,
-      emailVerified: user.emailVerified,
-      photo_profile: user.photo_profile,
-      user_point: user.user_point,
-      achivement: user.achivement,
-      total_correct_answer: user.total_correct_answer
-    }
-    return userRef.set(userData, {
-      merge: true
-    })
-  }
+  // // Store user in localStorage
+  // SetUserData(user) {
+  //   const userRef: AngularFirestoreDocument<any> = this.afStore.doc(`users/${user.user_id}`);
+  //   const userData: User = {
+  //     user_id: user.user_id,
+  //     email: user.email,
+  //     name: user.name,
+  //     username: user.username,
+  //     emailVerified: user.emailVerified,
+  //     photo_profile: user.photo_profile,
+  //     user_point: user.user_point,
+  //     achivement: user.achivement,
+  //     total_correct_answer: user.total_correct_answer
+  //   }
+  //   return userRef.set(userData, {
+  //     merge: true
+  //   })
+  // }
 
   // Sign-out navigate to home landing page
   SignOut() {

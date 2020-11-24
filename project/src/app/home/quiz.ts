@@ -7,6 +7,7 @@ export class Quiz {
     choice3: string;
     choice4: string;
     answer: string;
+    answer_description: string;
 
     constructor(
         quiz_id: string,
@@ -16,6 +17,7 @@ export class Quiz {
         choice2: string,
         choice3: string,
         choice4: string,
-        answer: string) {
+        answer: string,
+        answer_description: string) {
     }
 }

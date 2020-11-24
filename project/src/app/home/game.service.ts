@@ -3,6 +3,8 @@ import firebase from "firebase";
 import {AngularFireDatabase, AngularFireList} from "@angular/fire/database";
 import {Batik} from "./batik";
 import {Quiz} from "./quiz";
+import {User} from "./user";
+import {AngularFireModule} from "@angular/fire";
 
 
 @Injectable({
@@ -12,7 +14,9 @@ export class GameService {
   // Database path for quiz
   private dbPath = '/quiz';
   quizRef: AngularFireList<Quiz> = null;
+  userRef: AngularFireList<User> = null;
   user_id;
+
   // // database = firebase.database().ref();
   //
   // // Get data from users table in firebase
@@ -39,6 +43,7 @@ export class GameService {
 
   constructor(private db: AngularFireDatabase) {
     this.quizRef = db.list(this.dbPath);
+    this.userRef = db.list('users/');
   }
 
   // Use this to get all data
@@ -46,18 +51,37 @@ export class GameService {
     return this.quizRef;
   }
 
-  getUserId() {
+  // getUserId() {
+  //   this.user_id = firebase.auth().currentUser.uid;
+  //   return firebase.database().ref('users/'+ this.user_id + '/points');
+  // }
+
+  getUserData(): AngularFireList<User> {
+    return this.userRef;
+  }
+
+  getUserDataById(){
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User logged in already or has just logged in.
         this.user_id = user.uid;
         console.log('===USER ID===', this.user_id);
-        return this.user_id;
+        return  firebase.database().ref('users/'+ this.user_id + '/points');
       } else {
         // User not logged in or has just logged out.
       }
     });
   }
+
+  // getUser() {
+  //   let user = firebase.auth().currentUser;
+  //   if (user) {
+  //     var getUserInfo = firebase.database().ref('users/' + user.uid);
+  //     getUserInfo.once('value', function(snapshot) {
+  //       console.log('GET USERRRRR', snapshot.val()); //returns net_worth, etc
+  //     });
+  //   }
+  // }
 
   // // quiz code
   // batikQuiz(quizId) {

@@ -1,4 +1,5 @@
 <ion-content mode="ios">
+
   <!-- Score and Question Description -->
   <ion-grid class="ion-no-padding">
     <ion-row>
@@ -21,15 +22,6 @@
       <div class="ion-text-center">
         <ion-label class="text-title">Pertanyaan {{index}}/10</ion-label>
         <ion-card>
-<!--          <ion-progress-bar-->
-<!--                  color="primary"-->
-<!--                  [value]="quizTimeLimit"-->
-<!--                  *ngIf="quizTimeLimit !== 1">-->
-<!--          </ion-progress-bar>-->
-
-<!--          <ion-item *ngIf="quizTimeLimit === 1">-->
-<!--            <ion-label>KALAH LO</ion-label>-->
-<!--          </ion-item>-->
 
           <ion-card-header>
            <img src="{{quiz.quiz_image}}">
@@ -86,21 +78,32 @@
             </ion-radio-group>
           </ion-list>
 
-<!--          <ion-text *ngIf="selectedChoice && selectedChoice !== quiz.answer">-->
-<!--            SALAH-->
-<!--          </ion-text>-->
-
           <ion-button type="submit"
                       (click)="getQuizResult(); disabledChoices(); showAnswer()"
                       [disabled]="!quizCtrl.valid"> Berikutnya
               <ion-icon class="ion-padding-start" name="arrow-forward-circle-outline"></ion-icon>
           </ion-button>
 
+            <ion-button type="submit"
+                        (click)="swipeNext()"
+                        [disabled]="!quizCtrl.valid"> -->
+            </ion-button>
+
+            <br><br>
             <ion-item *ngIf="selectedChoice === quiz.answer && show">
-                BENER
+                JAWABAN KAMU BENAR! <br>
+               {{quiz.answer_description}}
+
+            </ion-item>
+
+            <ion-item *ngIf="selectedChoice !== quiz.answer && show">
+                SALAH <br>
+                JAWABAN: {{quiz.answer}} <br>
+                {{quiz.answer_description}}
             </ion-item>
 
           <ion-button type="submit"
+                      (click)="postScoreToFirebase()"
                       *ngIf="index === quizes.length"
                       href="/home/results">
             DONE
@@ -114,25 +117,3 @@
 <!--    <ion-button type="submit" shape="round" (click)="getQuizResult()">Selesai!</ion-button>-->
   </ion-grid>
 </ion-content>
-
-
-<!--<ion-header>-->
-<!--  <ion-toolbar class="Align" color="primary">-->
-<!--    <ion-title>Quiz</ion-title>-->
-<!--  </ion-toolbar>-->
-<!--</ion-header>-->
-
-<!--<ion-content>-->
-<!--  <ion-card>-->
-<!--    <ion-list *ngFor="let quiz of quiz_questions">-->
-<!--      <h3><b>{{ quiz.counter }}. {{ quiz.quiz_questions}}</b></h3>-->
-<!--      <ion-radio-group>-->
-<!--        <ion-item *ngFor="let tcf of quiz.quiz_answers">-->
-<!--          <ion-label>{{ tcf }}</ion-label>-->
-<!--          <ion-radio slot="start" value="{{ tcf }}"></ion-radio>-->
-<!--        </ion-item>-->
-<!--      </ion-radio-group>-->
-<!--    </ion-list>-->
-<!--  </ion-card>-->
-<!--</ion-content>-->
-
