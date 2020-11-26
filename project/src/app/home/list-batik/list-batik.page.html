@@ -1,0 +1,25 @@
+
+<ion-content>
+
+  <ion-buttons>
+    <ion-back-button mode="md" defaultHref = "/home/tabs/landing-page"></ion-back-button>
+  </ion-buttons>
+
+  <!--  Title and Subtitle  -->
+  <div class="ion-padding-start">
+    <h1>MOTIF BATIK</h1>
+    <span>Jelajah ragam motif batik dari <br> berbagai Provinsi Indonesia</span>
+  </div>
+
+  <ion-card [routerLink]="['./', batik.batik_id]" *ngFor="let batik of batiks">
+
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-thumbnail><img src="{{batik.batik_image}}"></ion-thumbnail>
+      <div class="ion-nowrap ion-padding">
+        <ion-label><b>{{batik.batik_name}}</b></ion-label>
+        <ion-label>{{batik.province_name}}</ion-label>
+      </div>
+    </ion-item>
+  </ion-card>
+
+</ion-content>

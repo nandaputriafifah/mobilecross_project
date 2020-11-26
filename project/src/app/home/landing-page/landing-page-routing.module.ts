@@ -8,10 +8,7 @@ const routes: Routes = [
     path: '',
     component: LandingPagePage
   },
-  {
-    path: ':batik_id',
-    loadChildren: () => import('./list-batik/list-batik.module').then( m => m.ListBatikPageModule)
-  }
+
 ];
 
 @NgModule({

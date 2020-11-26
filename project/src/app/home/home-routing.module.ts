@@ -36,7 +36,11 @@ const routes: Routes = [
   {
     path: 'verify-email',
     loadChildren: () => import('./verify-email/verify-email.module').then( m => m.VerifyEmailPageModule)
+  },  {
+    path: 'list-batik',
+    loadChildren: () => import('./list-batik/list-batik.module').then( m => m.ListBatikPageModule)
   }
+
 ];
 
 @NgModule({

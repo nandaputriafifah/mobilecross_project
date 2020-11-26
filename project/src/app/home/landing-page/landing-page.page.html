@@ -28,7 +28,7 @@
     <br><br>
     <ion-text><b>Motif Batik</b></ion-text>
   </div>
-    <ion-card [routerLink]="['./', batik.batik_id]" *ngFor="let batik of batiks">
+    <ion-card [routerLink]="['/home/list-batik/', batik.batik_id]" *ngFor="let batik of batiks">
       <!-- Only shows 5 Batik in landing page -->
       <ion-item *ngIf="batik.batik_id <= 5" class="ion-no-padding" lines="none">
         <ion-thumbnail><img src="{{batik.batik_image}}"></ion-thumbnail>
@@ -38,7 +38,7 @@
           </div>
       </ion-item>
     </ion-card>
-  <ion-button color="secondary">Lihat Batik lebih lanjut</ion-button>
+  <ion-button href ="/home/list-batik" color="secondary">Lihat Batik lebih lanjut</ion-button>
 
   <!--  Navigation to Games -->
   <div class="ion-padding-start ion-padding-top">
