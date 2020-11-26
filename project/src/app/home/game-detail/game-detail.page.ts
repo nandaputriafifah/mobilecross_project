@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {map} from "rxjs/operators";
 import {IonSlides} from "@ionic/angular";
 import firebase from "firebase";
+import {AngularFireDatabase} from "@angular/fire/database";
 
 @Component({
   selector: 'app-game-detail',
@@ -15,11 +16,17 @@ export class GameDetailPage implements OnInit {
   selectedChoice: string;
   selectedQuestion: string;
   score: number = 0;
+
+  randomIndex = Math.floor(Math.random() * 10);
+  contoh;
+
   index: number;
-  quizTimeLimit: number;
   show: boolean;
   doDisabled: boolean;
   user_id: string;
+
+  totalPoints: any;
+  userId: any;
 
   today = new Date();
   todaysDay = String(this.today.getDate()).padStart(2, '0');
@@ -32,7 +39,8 @@ export class GameDetailPage implements OnInit {
 
   constructor(
       public gameService: GameService,
-      public router: ActivatedRoute
+      public router: ActivatedRoute,
+      public afDatabase: AngularFireDatabase
   ) {
   }
 
@@ -43,9 +51,27 @@ export class GameDetailPage implements OnInit {
         )
     ).subscribe(data => {
       this.quizes = data;
-      console.log(data);
+      firebase.database().ref('/quiz').on('value', () => {});
+      firebase.database().ref('/quiz').once('value').then(quiz => this.contoh = quiz.key)
+      console.log('CONTOH', this.contoh);
     });
-    this.quizTimeLimit = 1;
+
+    this.gameService.getUserData().snapshotChanges().pipe(
+        map(changes =>
+            changes.map(c => ({user_id: c.payload.key, ...c.payload.val()}))
+        )
+    ).subscribe(() => {
+      this.userId = firebase.auth().currentUser.uid;
+      console.log('USER ID CURRENT', this.userId);
+      this.afDatabase.database.ref('users/' + this.userId).once('value').then( userDetailsAsObject => {
+
+        this.totalPoints = userDetailsAsObject.val().total_points;
+      }).catch( err => {
+        console.log('Error pulling /profile table inside functionName() inside componentName.component.ts');
+        console.log(err);
+      });
+    });
+
     this.doDisabled = false;
     this.show = false;
   }
@@ -116,6 +142,10 @@ export class GameDetailPage implements OnInit {
         firebase.database().ref('users/' + this.user_id + '/points').set({
           user_score: this.score,
           user_point: this.score / 10
+        });
+
+        firebase.database().ref('users/' + this.user_id ).update({
+          total_points: this.totalPoints += this.score / 10
         });
       } else {
         // User not logged in or has just logged out.

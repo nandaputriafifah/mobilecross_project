@@ -19,6 +19,7 @@ export class AuthenticationService {
   name;
   id;
 
+
   // getting data from users table
   users_array = [];
   usernames_table;
@@ -63,9 +64,12 @@ export class AuthenticationService {
 
         // inserting into database
         firebase.database().ref('users/' + this.user_id).set({
-          names: name,
+          name: name,
           usernames: username,
           emails: email,
+          total_points: 0,
+          photo_profile: null,
+          achivement: null
         }, (error) => {
           if (error) {
             console.log(error);

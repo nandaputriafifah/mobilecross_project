@@ -16,6 +16,9 @@ export class GameService {
   quizRef: AngularFireList<Quiz> = null;
   userRef: AngularFireList<User> = null;
   user_id;
+  totalQuiz: number = 10;
+  ref = firebase.database().ref('/quiz');
+  randomIndex = Math.floor(Math.random() * this.totalQuiz);
 
   // // database = firebase.database().ref();
   //
@@ -51,6 +54,7 @@ export class GameService {
     return this.quizRef;
   }
 
+
   // getUserId() {
   //   this.user_id = firebase.auth().currentUser.uid;
   //   return firebase.database().ref('users/'+ this.user_id + '/points');
@@ -60,18 +64,18 @@ export class GameService {
     return this.userRef;
   }
 
-  getUserDataById(){
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        // User logged in already or has just logged in.
-        this.user_id = user.uid;
-        console.log('===USER ID===', this.user_id);
-        return  firebase.database().ref('users/'+ this.user_id + '/points');
-      } else {
-        // User not logged in or has just logged out.
-      }
-    });
-  }
+  // getUserDataById(){
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       // User logged in already or has just logged in.
+  //       this.user_id = user.uid;
+  //       console.log('===USER ID===', this.user_id);
+  //       return  firebase.database().ref('users/'+ this.user_id + '/points');
+  //     } else {
+  //       // User not logged in or has just logged out.
+  //     }
+  //   });
+  // }
 
   // getUser() {
   //   let user = firebase.auth().currentUser;
