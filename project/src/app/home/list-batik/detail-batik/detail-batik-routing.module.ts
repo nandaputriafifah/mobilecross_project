@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ListBatikPage } from './list-batik.page';
+import { DetailBatikPage } from './detail-batik.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ListBatikPage
+    component: DetailBatikPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ListBatikPageRoutingModule {}
+export class DetailBatikPageRoutingModule {}

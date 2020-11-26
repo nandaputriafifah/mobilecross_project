@@ -5,5 +5,5 @@
 </ion-header>
 
 <ion-content>
-
+<ion-item *ngFor = "let batik of batiks" [routerlink]="['./' + batik.batik_id]">{{batik.batik_name}} </ion-item>
 </ion-content>
