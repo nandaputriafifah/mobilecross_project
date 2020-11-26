@@ -4,6 +4,7 @@ import {AngularFireDatabase, snapshotChanges} from '@angular/fire/database';
 import {BatikService} from "../../batik.service";
 import {map} from "rxjs/operators";
 
+
 @Component({
   selector: 'app-detail-batik',
   templateUrl: './detail-batik.page.html',
@@ -18,6 +19,7 @@ batikHistory: string;
 batikImage: string;
 batikDescription: string;
 batikProvince: string;
+
 
   constructor(
       private activatedRoute: ActivatedRoute,
@@ -50,6 +52,7 @@ batikProvince: string;
         this.batikProvince = this.batikDetail.province_name;
         this.batikHistory = this.batikDetail.batik_history;
         this.batikImage = this.batikDetail.batik_image;
+
     });
   }
 
