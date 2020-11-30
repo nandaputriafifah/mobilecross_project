@@ -67,3 +67,16 @@ ion-item:active {
   height: 45px;
   border-radius: 20px;
 }
+
+.card-choices-correct{
+  height: 45px;
+  border-radius: 20px;
+  --ion-background-color: #283618;
+}
+
+.card-choices-false{
+  height: 45px;
+  border-radius: 20px;
+  --ion-background-color: #b50000;
+}
+
