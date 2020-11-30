@@ -19,7 +19,8 @@ batikHistory: string;
 batikImage: string;
 batikDescription: string;
 batikProvince: string;
-
+batikLocation: string;
+batikMaps: string;
 
   constructor(
       private activatedRoute: ActivatedRoute,
@@ -52,7 +53,8 @@ batikProvince: string;
         this.batikProvince = this.batikDetail.province_name;
         this.batikHistory = this.batikDetail.batik_history;
         this.batikImage = this.batikDetail.batik_image;
-
+        this.batikLocation = this.batikDetail.batik_location;
+        this.batikMaps = this.batikDetail.batik_maps;
     });
   }
 

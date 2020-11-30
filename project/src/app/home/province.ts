@@ -2,6 +2,7 @@ export class Province {
     province_id: string;
     province_name: string;
     province_image: string;
+    province_thumbnail: string;
     list_batik: {
         batik_id: string
     };
@@ -16,6 +17,7 @@ export class Province {
         province_id: string,
         province_name: string,
         province_image: string,
+        province_thumbnail: string,
         list_batik: {
             batik_id: string
         },

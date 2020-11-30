@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ProvinceService} from '../../province.service';
 import {map} from 'rxjs/operators';
 import firebase from 'firebase';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {ActivatedRoute} from '@angular/router';
+import {ProvinceService} from '../../province.service';
 
 @Component({
   selector: 'app-list-batik-province',
@@ -32,12 +32,13 @@ dataURL: string;
   // Get all list batik in province selected
   // Give parameter id for province_id
   getProvince(id) {
-    this.afDatabase.object('province/' + id + '/list_batik').valueChanges().subscribe(val => {
-      this.provinceDetail = val;
+    const ref =  this.afDatabase.database.ref('province/' + id + '/list_batik');
+    ref.once('value').then((snapshot) => {
+      this.provinceDetail = snapshot.val();
     });
   }
 
-  // Get all list batik in province selected
+  // Get list province name in province selected
   // Give parameter id for province_id
   getProvinceName(id) {
     this.afDatabase.database.ref('province/' + id).once('value').then((snapshot) => {

@@ -7,7 +7,7 @@
     <h1 class=" ion-text-uppercase">BATIK {{provinceName}}</h1>
   </div>
 
-  <ion-card *ngFor="let batikProvince of provinceDetail">
+  <ion-card *ngFor="let batikProvince of provinceDetail" [routerLink]="['/home/list-batik/' + batikProvince.batik_id]">
     <ion-item class="ion-no-padding" lines="none">
       <ion-thumbnail><img src="{{batikProvince.batik_image}}"></ion-thumbnail>
       <div class="ion-nowrap ion-padding">

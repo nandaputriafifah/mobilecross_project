@@ -36,10 +36,16 @@ const routes: Routes = [
   {
     path: 'verify-email',
     loadChildren: () => import('./verify-email/verify-email.module').then( m => m.VerifyEmailPageModule)
-  },  {
-    path: 'list-batik',
-    loadChildren: () => import('./list-batik/list-batik.module').then( m => m.ListBatikPageModule)
-  }
+  },
+    {
+        path: 'list-batik',
+        loadChildren: () => import('./list-batik/list-batik.module').then( m => m.ListBatikPageModule)
+    },
+    {
+        path: 'list-province',
+        loadChildren: () => import('./list-province/list-province.module').then( m => m.ListProvincePageModule)
+    }
+
 
 ];
 
@@ -47,4 +53,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
+
 export class HomePageRoutingModule { }

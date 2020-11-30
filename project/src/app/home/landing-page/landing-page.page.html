@@ -11,16 +11,15 @@
     <ion-text><b><br>Provinsi</b></ion-text>
     <!-- This for showing images in slider   -->
     <ion-slides [options]="sliderOpts">
-      <!--  Do the loop for showing images based on image name in assets/images/provinces/{image_name} -->
-      <!--  If you want to add another image in slider, -->
-      <!--  simply insert image name in array `let img of ['borobudur','{insert_image_name}']`-->
-      <!--  Name in array should be the same as image name in file assets/images/provinces -->
-      <ion-slide *ngFor="let img of ['borobudur', 'kalimantan', 'sumatera', 'banten']">
-        <img class="img-slider" src="assets/images/provinces/{{img}}.jpg">
+      <!--  Do the loop for showing images based on image in database -->
+      <ion-slide *ngFor="let img of provinces">
+        <ion-item mode="md" lines="none" [routerLink]="['/home/list-province/' + img.province_id]">
+          <img class="img-slider" src="{{img.province_thumbnail}}">
+        </ion-item>
       </ion-slide>
     </ion-slides>
     <br>
-    <ion-button color="secondary">Lihat Provinsi lebih lanjut</ion-button>
+    <ion-button color="secondary" href="/home/list-province">Lihat Provinsi lebih lanjut</ion-button>
   </div>
 
   <!--  Batik List -->

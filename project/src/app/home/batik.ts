@@ -8,6 +8,7 @@ export class Batik {
     batik_image: string;
     batik_video: string;
     batik_location: string;
+    batik_maps: string;
 
     constructor(
         batik_id: string,
@@ -18,6 +19,7 @@ export class Batik {
         batik_history: string,
         batik_image: string,
         batik_video: string,
-        batik_location: string) {
+        batik_location: string,
+        batik_maps: string) {
     }
 }
