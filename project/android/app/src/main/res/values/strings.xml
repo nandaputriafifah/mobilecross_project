@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Baticca</string>
+    <string name="title_activity_main">Baticca</string>
+    <string name="package_name">umn.ac.id.baticca</string>
+    <string name="custom_url_scheme">umn.ac.id.baticca</string>
+</resources>
