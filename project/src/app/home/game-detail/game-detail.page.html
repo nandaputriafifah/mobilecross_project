@@ -230,50 +230,7 @@
                       href="/home/results">
             DONE
           </ion-button>
-
             <br><br>
-
-            <ion-radio-group name="quiz-batik" (ionChange)="choiceSelected($event)">
-
-              <ion-card class="card-choices">
-                <ion-item lines="none">
-                  <ion-label>{{quiz.choice1}}</ion-label>
-                  <ion-radio slot="start"
-                             value="{{quiz.choice1}}"
-                             disabled="{{doDisabled}}"></ion-radio>
-                </ion-item>
-              </ion-card>
-
-              <ion-card class="card-choices">
-                <ion-item lines="none">
-                  <ion-label>{{quiz.choice2}}</ion-label>
-                  <ion-radio slot="start"
-                             value="{{quiz.choice2}}"
-                             disabled="{{doDisabled}}"></ion-radio>
-                </ion-item>
-              </ion-card>
-
-              <ion-card class="card-choices">
-                <ion-item lines="none">
-                  <ion-label>{{quiz.choice3}}</ion-label>
-                  <ion-radio slot="start"
-                             value="{{quiz.choice3}}"
-                             disabled="{{doDisabled}}"></ion-radio>
-                </ion-item>
-              </ion-card>
-
-              <ion-card class="card-choices">
-                <ion-item lines="none">
-                  <ion-label>{{quiz.choice4}}</ion-label>
-                  <ion-radio slot="start"
-                             value="{{quiz.choice4}}"
-                             disabled="{{doDisabled}}"></ion-radio>
-                </ion-item>
-              </ion-card>
-
-            </ion-radio-group>
-          </ion-list>
-          <ion-button (click)="swipeNext()">Next</ion-button>
         </ion-card>
       </div>
     </ion-slide>
