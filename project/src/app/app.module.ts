@@ -13,6 +13,7 @@ import {environment} from "../environments/environment";
 import {AngularFireDatabaseModule} from "@angular/fire/database";
 import {AngularFireAuthModule} from "@angular/fire/auth";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
+import {YoutubeVideoPlayer} from "@ionic-native/youtube-video-player";
 
 @NgModule({
   declarations: [AppComponent],

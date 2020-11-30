@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import {AngularFireDatabase, snapshotChanges} from '@angular/fire/database';
 import {BatikService} from "../../batik.service";
 import {map} from "rxjs/operators";
+import {YoutubeVideoPlayer} from "@ionic-native/youtube-video-player/ngx";
+
 
 
 @Component({
@@ -24,8 +26,10 @@ batikProvince: string;
   constructor(
       private activatedRoute: ActivatedRoute,
       public afDatabase: AngularFireDatabase,
-      public batikService: BatikService
+      public batikService: BatikService,
+      private youtube: YoutubeVideoPlayer
   ) {
+
   }
 
     ngOnInit() {
@@ -44,7 +48,7 @@ batikProvince: string;
   }
 
   getBatik(id) {
-    let ref =  this.afDatabase.database.ref('batik/' + id);
+    const ref =  this.afDatabase.database.ref('batik/' + id);
     ref.once('value').then((snapshot) => {
         this.batikDetail = snapshot.val();
         this.batikName = this.batikDetail.batik_name;
@@ -55,5 +59,8 @@ batikProvince: string;
 
     });
   }
+  // getOpenVideo(){
+  //     this.youtube.openVideo('19kVMOExkrQ');
+  //}
 
 }
