@@ -27,16 +27,18 @@
     <br><br>
     <ion-text><b>Motif Batik</b></ion-text>
   </div>
-    <ion-card [routerLink]="['/home/list-batik/', batik.batik_id]" *ngFor="let batik of batiks">
-      <!-- Only shows 5 Batik in landing page -->
-      <ion-item *ngIf="batik.batik_id <= 5" class="ion-no-padding" lines="none">
-        <ion-thumbnail><img src="{{batik.batik_image}}"></ion-thumbnail>
+  <div *ngFor="let batik of batiks">
+    <!-- Only shows 5 Batik in landing page -->
+    <ion-card [routerLink]="['/home/list-batik/', batik.batik_id]" *ngIf="batik.batik_id <= 5">
+        <ion-item class="ion-no-padding" lines="none">
+          <ion-thumbnail><img src="{{batik.batik_image}}"></ion-thumbnail>
           <div class="ion-nowrap ion-padding">
             <ion-label><b>{{batik.batik_name}}</b></ion-label>
             <ion-label>{{batik.province_name}}</ion-label>
           </div>
-      </ion-item>
+        </ion-item>
     </ion-card>
+  </div>
   <ion-button href ="/home/list-batik" color="secondary">Lihat Batik lebih lanjut</ion-button>
 
   <!--  Navigation to Games -->

@@ -14,6 +14,14 @@ ion-card {
   .card-choices {
     width: 350px;
   }
+
+  .card-choices-correct{
+    width: 350px;
+  }
+
+  .card-choices-false{
+    width: 350px;
+  }
 }
 
 // Questions card for iphone 6/7/8/X screen resolution
@@ -23,7 +31,15 @@ ion-card {
   }
 
   .card-choices {
-    width: 300px;
+    width: 330px;
+  }
+
+  .card-choices-correct{
+    width: 330px;
+  }
+
+  .card-choices-false{
+    width: 330px;
   }
 }
 
@@ -34,6 +50,14 @@ ion-card {
   }
 
   .card-choices {
+    width: 260px;
+  }
+
+  .card-choices-correct{
+    width: 260px;
+  }
+
+  .card-choices-false{
     width: 260px;
   }
 }
@@ -72,11 +96,17 @@ ion-item:active {
   height: 45px;
   border-radius: 20px;
   --ion-background-color: #283618;
+  ion-radio {
+    --color-checked: white;
+  }
 }
 
 .card-choices-false{
   height: 45px;
   border-radius: 20px;
-  --ion-background-color: #b50000;
+  --ion-background-color: #bf382e;
+  ion-radio {
+    --color-checked: #bf382e;
+  }
 }
 
