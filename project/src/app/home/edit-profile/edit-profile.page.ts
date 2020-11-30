@@ -28,17 +28,17 @@ export class EditProfilePage implements OnInit {
   };
 
   constructor(
-      private http: Http,
+      // private http: Http,
       private afs: AngularFirestore,
       private alertController: AlertController,
       private user: AuthenticationService,
       private router:Router
   ) {
-    this.mainuser = afs.doc('users/${user.getUID()}')
-    this.sub = this.mainuser.valueChanges().subscribe(event => {
-      this.usernames = event.usernames
-      this.profilePic = event.profilePic
-    })
+    // this.mainuser = afs.doc('users/${user.getUID()}')
+    // this.sub = this.mainuser.valueChanges().subscribe(event => {
+    //   this.usernames = event.usernames
+    //   this.profilePic = event.profilePic
+    // })
   }
 
   ngOnInit() {
@@ -56,49 +56,49 @@ export class EditProfilePage implements OnInit {
     data.append('UPLLOADCARE_STORE', '1')
     data.append('UPLOADCARE_PUB_KEY', 'afbd4c71936aaa1d862f');
 
-    this.http.post('https://upload.uploadcare.com/base/', data)
-        .subscribe(event => {
-            const uuid = event.json().file
-          this.mainuser.update({
-            profilePic: uuid
-          })
-        })
+    // this.http.post('https://upload.uploadcare.com/base/', data)
+    //     .subscribe(event => {
+    //         const uuid = event.json().file
+    //       this.mainuser.update({
+    //         profilePic: uuid
+    //       })
+    //     })
   }
   async presentAler(title: string, content: string){
     let alett: any;
-    alett = await;
+    // alett = await;
   }
 
-  async updateDetails() {
-    this.busy = true
-
-    if (this.password){
-      return this.presentAler('Error!', 'Masukan Password');
-    }
-    try {
-      await this.user.reAuth(this.user.getUsername(), this.password);
-    }catch (error){
-      return this.presentAler('Error!', 'Password salah!');
-    }
-    if (this.newpassword){
-      await this.user.updatePassword(this.newpassword);
-    }
-
-    if (this.usernames !== this.user.getUsernames()){
-      await this.user.updateEmail(this.usernames);
-      this.mainuser.update({
-        username: this.usernames
-      });
-    }
-
-    this.password = '';
-    this.newpassword = '';
-    this.busy = false;
-
-    await this.presentAler('Done!', 'Profile telah diperbarui');
-
-    this.router.navigate(['home']);
-  }
+  // async updateDetails() {
+  //   this.busy = true
+  //
+  //   if (this.password){
+  //     return this.presentAler('Error!', 'Masukan Password');
+  //   }
+  //   try {
+  //     await this.user.reAuth(this.user.getUsername(), this.password);
+  //   }catch (error){
+  //     return this.presentAler('Error!', 'Password salah!');
+  //   }
+  //   if (this.newpassword){
+  //     await this.user.updatePassword(this.newpassword);
+  //   }
+  //
+  //   if (this.usernames !== this.user.getUsernames()){
+  //     await this.user.updateEmail(this.usernames);
+  //     this.mainuser.update({
+  //       username: this.usernames
+  //     });
+  //   }
+  //
+  //   this.password = '';
+  //   this.newpassword = '';
+  //   this.busy = false;
+  //
+  //   await this.presentAler('Done!', 'Profile telah diperbarui');
+  //
+  //   this.router.navigate(['home']);
+  // }
 
 }
 

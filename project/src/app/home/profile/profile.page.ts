@@ -31,11 +31,11 @@ export class ProfilePage implements OnInit {
       public authService: AuthenticationService,
       public afDatabase: AngularFireDatabase
   ) {
-     this.mainuser = afs.doc('users/${user.getUID()}');
-     this.sub = this.mainuser.valueChanges().subscribe(event => {
-       this.usernames = event.usernames;
-       this.profilePic = event.profilePict;
-    });
+    //  this.mainuser = afs.doc('users/${user.getUID()}');
+    //  this.sub = this.mainuser.valueChanges().subscribe(event => {
+    //    this.usernames = event.usernames;
+    //    this.profilePic = event.profilePict;
+    // });
   }
 
   ngOnDestroy(){

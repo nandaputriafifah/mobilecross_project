@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {User} from './user';
 import firebase from 'firebase';
 import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
-import {auth} from 'firebase/app';
+// import {auth} from 'firebase/app';
 
 
 @Injectable({
@@ -173,10 +173,10 @@ export class AuthenticationService {
     return this.userRef;
   }
 
-  // Profile reauth
-  reAuth(username: string, password: string){
-    return this.afAuth.Auth.currentUser.reauthenticateWithCredential(auth.EmailAuthProvider.credential(username, password))
-  }
+  // // Profile reauth
+  // reAuth(username: string, password: string){
+  //   return this.afAuth.Auth.currentUser.reauthenticateWithCredential(auth.EmailAuthProvider.credential(username, password))
+  // }
 
   updatePassword(newpassword: string){
     return this.afAuth.auth.currentUser.updatePassword(newpassword)

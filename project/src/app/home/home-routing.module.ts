@@ -23,10 +23,6 @@ const routes: Routes = [
             path: 'profile',
             loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
         },
-        {
-            path: 'edit-profile',
-            loadChildren: () => import('./edit-profile/edit-profile.module').then(m => m.EditProfilePageModule)
-        },
     ]
   },
   {
@@ -41,6 +37,10 @@ const routes: Routes = [
     path: 'verify-email',
     loadChildren: () => import('./verify-email/verify-email.module').then( m => m.VerifyEmailPageModule)
   },
+    {
+        path: 'edit-profile',
+        loadChildren: () => import('./edit-profile/edit-profile.module').then(m => m.EditProfilePageModule)
+    },
     {
         path: 'list-batik',
         loadChildren: () => import('./list-batik/list-batik.module').then( m => m.ListBatikPageModule)
