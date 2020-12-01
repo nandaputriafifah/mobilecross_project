@@ -1,25 +1,31 @@
-export class Batik {
-    batik_id: string;
+export class Province {
     province_id: string;
     province_name: string;
+    province_image: string;
+    province_thumbnail: string;
+    list_batik: {
+        batik_id: string
+    };
     batik_name: string;
     batik_description: string;
     batik_history: string;
     batik_image: string;
     batik_video: string;
     batik_location: string;
-    batik_maps: string;
 
     constructor(
-        batik_id: string,
         province_id: string,
         province_name: string,
+        province_image: string,
+        province_thumbnail: string,
+        list_batik: {
+            batik_id: string
+        },
         batik_name: string,
         batik_description: string,
         batik_history: string,
         batik_image: string,
         batik_video: string,
-        batik_location: string,
-        batik_maps: string) {
+        batik_location: string) {
     }
 }
