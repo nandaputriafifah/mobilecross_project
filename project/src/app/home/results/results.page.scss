@@ -26,12 +26,22 @@ span {
 }
 
 img {
-  size: 10px;
-  display: flex;
-  align-content: flex-end;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
 }
 
-.input-field{
-  height: 45px;
-  border-radius: 20px;
+mark.primary {
+  color:#bc6c25;
+  background: none;
+}
+
+.title-size {
+ font-size: 40px;
+}
+
+ion-button {
+  display: flex;
+  align-content: center;
 }

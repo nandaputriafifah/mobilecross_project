@@ -1,4 +1,4 @@
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" mode="ios">
 
   <!--  Title and Subtitle  -->
   <div class="ion-padding-start">
@@ -28,6 +28,6 @@
   <ion-button
           *ngIf="authService.isLoggedIn === true"
           color="secondary"
-          href="/home/tabs/games/game-detail">Mainkan sekarang!</ion-button>
+          (click)="presentLoading()">Mainkan sekarang!</ion-button>
 </ion-content>
 

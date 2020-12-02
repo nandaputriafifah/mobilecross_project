@@ -1,0 +1,308 @@
+<ion-content mode="ios" #content>
+
+  <!-- Score and Question Description -->
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size="4">
+      </ion-col>
+      <ion-col size="4.5">
+        <div class="ion-text-center ion-padding text-score">
+          <ion-label class="text-title">SKOR: {{score}}</ion-label>
+        </div>
+      </ion-col>
+      <ion-col size="3.5">
+        <ion-buttons class="ion-padding">
+          <ion-button (click)="presentAlert()"
+                      style="color: white;">
+            <ion-icon name="exit-outline" style="width: 100px;"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+
+    <!-- Each question will show by each slide -->
+    <ion-slides #quizSlider
+                (ionSlidesDidLoad)="getIndexSlideChanged()"
+                (ionSlideWillChange)="
+                getIndexSlideChanged();
+                enabledChoices();
+                hideAnswer();
+                scrollToTop();
+                 disabledSubmitButton()">
+    <ion-slide *ngFor="let quiz of quizes">
+
+      <div class="ion-text-center">
+        <ion-label class="text-title">Pertanyaan {{index}}/10</ion-label>
+
+        <!-- Image and question -->
+        <ion-card>
+          <ion-card-header>
+           <img src="{{quiz.quiz_image}}">
+          </ion-card-header>
+          <ion-text class="text-question">
+            {{quiz.question}}
+          </ion-text>
+
+          <!-- Insert choices here -->
+          <ion-list>
+            <ion-radio-group
+                    name="quiz-batik"
+                    (ionChange)="choiceSelected($event, quiz.question)"
+                    required
+                    ngModel
+                    #quizCtrl = "ngModel">
+
+              <ion-card class="card-choices" *ngIf="!show">
+                <ion-item lines="none">
+                  <ion-label>{{quiz.choice1}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice1}}"
+                             disabled="{{doDisabled}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices-correct"
+                        *ngIf="show && quiz.choice1 === quiz.answer">
+                <ion-item lines="none">
+                  <ion-label style="color: white;">{{quiz.choice1}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice1}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices-false"
+                        *ngIf="selectedChoice === quiz.choice1 && show && quiz.choice1 !== quiz.answer">
+                <ion-item lines="none">
+                  <ion-label style="color: white;">{{quiz.choice1}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice1}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices"
+                        *ngIf="show && quiz.choice1 !== quiz.answer  && selectedChoice !== quiz.choice1">
+                <ion-item lines="none">
+                  <ion-label>{{quiz.choice1}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice1}}"
+                             disabled="{{doDisabled}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices" *ngIf="!show">
+                <ion-item lines="none">
+                  <ion-label>{{quiz.choice2}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice2}}"
+                             disabled="{{doDisabled}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices-correct"
+                        *ngIf="show && quiz.choice2 === quiz.answer">
+                <ion-item lines="none">
+                  <ion-label style="color: white;">{{quiz.choice2}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice2}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices-false"
+                        *ngIf="selectedChoice === quiz.choice2 && show && quiz.choice2 !== quiz.answer">
+                <ion-item lines="none">
+                  <ion-label style="color: white;">{{quiz.choice2}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice2}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices"
+                        *ngIf="show && quiz.choice2 !== quiz.answer && selectedChoice !== quiz.choice2">
+                <ion-item lines="none">
+                  <ion-label>{{quiz.choice2}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice2}}"
+                             disabled="{{doDisabled}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices" *ngIf="!show">
+                <ion-item lines="none">
+                  <ion-label>{{quiz.choice3}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice3}}"
+                             disabled="{{doDisabled}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices-correct"
+                        *ngIf="show && quiz.choice3 === quiz.answer">
+                <ion-item lines="none">
+                  <ion-label style="color: white;">{{quiz.choice3}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice3}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices-false"
+                        *ngIf="selectedChoice === quiz.choice3 && show && quiz.choice3 !== quiz.answer">
+                <ion-item lines="none">
+                  <ion-label style="color: white;">{{quiz.choice3}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice3}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices"
+                        *ngIf="show && quiz.choice3 !== quiz.answer && selectedChoice !== quiz.choice3">
+                <ion-item lines="none">
+                  <ion-label>{{quiz.choice3}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice3}}"
+                             disabled="{{doDisabled}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices" *ngIf="!show">
+                <ion-item lines="none">
+                  <ion-label>{{quiz.choice4}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice4}}"
+                             disabled="{{doDisabled}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices-correct"
+                        *ngIf="show && quiz.choice4 === quiz.answer">
+                <ion-item lines="none">
+                  <ion-label style="color: white;">{{quiz.choice4}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice4}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices-false"
+                        *ngIf="selectedChoice === quiz.choice4 && show && quiz.choice4 !== quiz.answer">
+                <ion-item lines="none">
+                  <ion-label style="color: white;">{{quiz.choice4}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice4}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+              <ion-card class="card-choices"
+                        *ngIf="show && quiz.choice4 !== quiz.answer && selectedChoice !== quiz.choice4">
+                <ion-item lines="none">
+                  <ion-label>{{quiz.choice4}}</ion-label>
+                  <ion-radio slot="start"
+                             value="{{quiz.choice4}}"
+                             disabled="{{doDisabled}}"></ion-radio>
+                </ion-item>
+              </ion-card>
+
+            </ion-radio-group>
+          </ion-list>
+
+          <!--   Button to get score by getQuizResult() and show answer by showAnswer()  -->
+          <ion-button type="submit"
+                      *ngIf="doDisabledSubmitButton"
+                      (click)="getQuizResult(); disabledChoices(); showAnswer(); hideSubmitButton();"
+                      [disabled]="!quizCtrl.valid"
+                      disabled="{{!doDisabledSubmitButton}}">KIRIM
+          </ion-button>
+
+            <br><br>
+        </ion-card>
+
+        <!--   Scroll to bottom to see answer description -->
+        <div class="next-button">
+          <ion-buttons>
+            <ion-button *ngIf="selectedChoice === quiz.answer && show"
+                        (click)="scrollToBottom()"
+                        style="color: white">
+              <ion-icon name="arrow-down-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+
+          <ion-buttons>
+            <ion-button *ngIf="selectedChoice !== quiz.answer && show"
+                        (click)="scrollToBottom()"
+                        style="color: white">
+              <ion-icon name="arrow-down-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div>
+
+        <!--   Answer description -->
+        <!--   Correct answer -->
+        <ion-card>
+          <ion-item *ngIf="selectedChoice === quiz.answer && show">
+            <div class="ion-nowrap">
+
+              <ion-card-header>
+                <ion-card-title style="color: #283618;"> JAWABAN KAMU BENAR! </ion-card-title>
+              </ion-card-header>
+
+              <ion-card-content>
+                {{quiz.answer_description}}
+              </ion-card-content>
+            </div>
+
+          </ion-item>
+
+          <!--   False answer  -->
+          <ion-item *ngIf="selectedChoice !== quiz.answer && show">
+            <div class="ion-nowrap">
+              <ion-card-header>
+                <ion-card-title style="color: #bf382e;"> JAWABAN KAMU SALAH </ion-card-title>
+                <ion-card-subtitle>JAWABAN: {{quiz.answer}}</ion-card-subtitle>
+              </ion-card-header>
+
+              <ion-card-content>
+                {{quiz.answer_description}}
+              </ion-card-content>
+            </div>
+          </ion-item>
+        </ion-card>
+
+        <!--  Button to post score value into database  -->
+        <div class="submit-button" *ngIf="show">
+          <ion-button type="submit"
+                      (click)="postScoreToFirebase();presentLoading()"
+                      *ngIf="index === quizes.length"
+                      shape="round"
+                      style="height: 40px;width: 180px;font-size: 17px;">LIHAT HASIL!
+          </ion-button>
+        </div>
+
+
+        <div class="next-button" *ngIf="selectedChoice === quiz.answer && show">
+          <ion-buttons>
+            <ion-button type="submit"
+                        shape="round"
+                        *ngIf="index !== quizes.length"
+                        (click)="swipeNext()"
+                        [disabled]="!quizCtrl.valid"
+                        style="height: 30px;color: white;"> Berikutnya
+              <ion-icon  class="ion-padding-start" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div> <br>
+
+        <div class="next-button" *ngIf="selectedChoice !== quiz.answer && show">
+          <ion-buttons>
+            <ion-button type="submit"
+                        shape="round"
+                        *ngIf="index !== quizes.length"
+                        (click)="swipeNext()"
+                        [disabled]="!quizCtrl.valid"
+                        style="height: 30px;color: white;"> Berikutnya
+              <ion-icon  class="ion-padding-start" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div> <br>
+      </div>
+    </ion-slide>
+    </ion-slides>
+  </ion-grid>
+</ion-content>

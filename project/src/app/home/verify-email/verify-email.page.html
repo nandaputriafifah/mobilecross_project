@@ -1,23 +1,32 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>verify-email</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding" mode="ios">
+  <ion-buttons>
+    <ion-back-button mode="md" defaultHref="/home/tabs/profile">
+    </ion-back-button>
+  </ion-buttons>
+  <br><br><br>
+  <div class="ion-nowrap ion-text-center">
+    <img src="assets/images/email.png">
+  </div>
 
-<ion-content>
+  <!--  Title and Subtitle  -->
+  <div class="ion-padding-start ion-padding-top">
+    <h1>VERIFIKASI EMAIL</h1>
+    <ion-label style="font-size: 18px;"> Silahkan cek email Anda dan klik link <br> untuk verifikasi email.</ion-label>
+    <br><br>
+  </div>
+
   <ion-grid>
     <ion-row>
-      <h2>Ionic 4 Firebase Verify Email</h2>
-      <p>
-        Please check your email and click on the link to verfiy your email address.
-      </p>
-      <ion-button type="submit" (click)="authService.SendVerificationMail()" expand="block">
-        Resend Verification Email
-      </ion-button>
-      <ion-button type="submit" href="/home/login" expand="block">Login</ion-button>
+      <ion-col>
+        <ion-button type="submit" expand="block" (click)="authService.SendVerificationMail()" expand="block">
+          Kirim ulang link verifikasi
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" href="/home/login" expand="block">Masuk Akun</ion-button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
