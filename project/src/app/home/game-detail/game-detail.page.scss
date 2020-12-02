@@ -1,0 +1,122 @@
+ion-content {
+  --ion-background-color:#283618;
+}
+
+ion-card {
+  --ion-background-color: white;
+}
+
+// Questions card for iphone 6/7/8 plus screen resolution
+@media only screen and (max-width: 414px) {
+  ion-card {
+    width: 380px;
+  }
+  .card-choices {
+    width: 350px;
+  }
+
+  .card-choices-correct{
+    width: 350px;
+  }
+
+  .card-choices-false{
+    width: 350px;
+  }
+}
+
+// Questions card for iphone 6/7/8/X screen resolution
+@media only screen and (max-width: 375px) {
+  ion-card {
+    width: 330px;
+  }
+
+  .card-choices {
+    width: 300px;
+  }
+
+  .card-choices-correct{
+    width: 300px;
+  }
+
+  .card-choices-false{
+    width: 300px;
+  }
+}
+
+// Questions card for iphone 5/SE screen resolution
+@media only screen and (max-width: 320px) {
+  ion-card {
+    width: 290px;
+  }
+
+  .card-choices {
+    width: 260px;
+  }
+
+  .card-choices-correct{
+    width: 260px;
+  }
+
+  .card-choices-false{
+    width: 260px;
+  }
+}
+
+ion-radio {
+  --color-checked: green;
+}
+
+ion-item:active {
+  background-color: green;
+  border-color: green;
+}
+
+
+.text-title {
+  color: white;
+}
+
+.text-score {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.text-question {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
+
+.card-choices {
+  height: 45px;
+  border-radius: 20px;
+}
+
+.card-choices-correct{
+  height: 45px;
+  border-radius: 20px;
+  --ion-background-color: #283618;
+  ion-radio {
+    --color-checked: #283618;
+  }
+}
+
+.card-choices-false{
+  height: 45px;
+  border-radius: 20px;
+  --ion-background-color: #bf382e;
+  ion-radio {
+    --color-checked: #bf382e;
+  }
+}
+
+.next-button {
+  display: flex;
+  justify-content: center;
+}
+
+.submit-button {
+  display: flex;
+  justify-content: center;
+}
+

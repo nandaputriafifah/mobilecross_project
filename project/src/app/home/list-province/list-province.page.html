@@ -1,0 +1,19 @@
+<ion-content mode="ios">
+  <ion-buttons>
+    <ion-back-button mode="md" defaultHref="/home/tabs/landing-page"></ion-back-button>
+  </ion-buttons>
+  <!--  Title and Subtitle  -->
+  <div class="ion-padding-start">
+    <h1>PROVINSI</h1>
+    <span>Jelajah provinsi untuk melihat <br> ragam motif batik Nusantara</span>
+  </div>
+  <ion-card *ngFor="let province of provinces" [routerLink]="['./', province.province_id]">
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-thumbnail><img src="{{province.province_image}}"></ion-thumbnail>
+      <div class="ion-nowrap ion-padding">
+        <ion-label><b>{{province.province_name}}</b></ion-label>
+      </div>
+    </ion-item>
+  </ion-card>
+
+</ion-content>

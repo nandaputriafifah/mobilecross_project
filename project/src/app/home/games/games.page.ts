@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AlertController} from "@ionic/angular";
-import {Router} from "@angular/router";
-import {AuthenticationService} from "../authentication.service";
+import {AlertController, LoadingController} from '@ionic/angular';
+import {Router} from '@angular/router';
+import {AuthenticationService} from '../authentication.service';
 
 @Component({
   selector: 'app-games',
@@ -12,6 +12,7 @@ export class GamesPage implements OnInit {
 
   constructor(
       private alertCtrl: AlertController,
+      private loadingCtrl: LoadingController,
       private router: Router,
       public authService: AuthenticationService
   ) { }
@@ -34,7 +35,7 @@ export class GamesPage implements OnInit {
           text: 'BELUM',
           role: 'register',
           handler: () => {
-              this.router.navigateByUrl('/home/register')
+              this.router.navigateByUrl('/home/register');
           }
         }
       ]
@@ -42,5 +43,20 @@ export class GamesPage implements OnInit {
 
     await alert.present();
   }
+
+    async presentLoading() {
+        const loading = await this.loadingCtrl.create({
+            cssClass: 'my-custom-class',
+            spinner: 'dots',
+            message: 'Mempersiapkan kuis...',
+            duration: 4000
+        });
+        await loading.present();
+
+        await loading.onDidDismiss().then( () => {
+            this.router.navigateByUrl('/home/game-detail');
+            console.log('Loading dismissed!');
+        });
+    }
 
 }

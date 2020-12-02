@@ -1,29 +1,48 @@
-<ion-header>
+<ion-header mode="ios">
   <ion-toolbar>
     <ion-title>{{batikName}}</ion-title>
     <ion-buttons>
       <ion-back-button mode="md" defaultHref = "/home/list-batik"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button href="/home/tabs/landing-page">
+        <ion-icon color="dark" name="home-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content mode="ios">
   <img src="{{batikImage}}">
-  <ion-card>
-  <ion-item>{{batikName}}</ion-item>
-  </ion-card>
+  <div class="ion-nowrap">
+    <!--  Title and Subtitle  -->
+    <div class="ion-padding-start ion-text-uppercase">
+      <h1>{{batikName}}</h1>
+      <ion-label>Asal daerah: {{batikProvince}}</ion-label>
+    </div>
 
-  <ion-card>
-  <ion-item>{{batikProvince}}</ion-item>
-  </ion-card>
+    <ion-card>
+      <ion-item>
+        <h2 style="font-size: 20px;"><b>ARTI MOTIF</b></h2>
+      </ion-item>
+      <br>
+      <ion-item lines="none" class="ion-padding-bottom">{{batikDescription}}</ion-item>
+    </ion-card>
 
-  <ion-card>
-  <ion-item>{{batikDescription}}</ion-item>
-  </ion-card>
+    <ion-card>
+      <ion-item>
+        <h2 style="font-size: 20px;"><b>SEJARAH MOTIF</b></h2>
+      </ion-item>
+      <br>
+      <ion-item lines="none" class="ion-padding-bottom">{{batikHistory}}</ion-item>
+    </ion-card>
 
-  <ion-card>
-  <ion-item>{{batikHistory}}</ion-item>
-  </ion-card>
-
+    <ion-card href="{{batikLocation}}">
+      <ion-item>
+      <h2 style="font-size: 20px;"><b>KAMPUNG BATIK</b></h2>
+      </ion-item>
+      <br>
+      <img src="{{batikMaps}}">
+    </ion-card>
+  </div>
 </ion-content>

@@ -1,0 +1,18 @@
+<ion-content mode="ios">
+  <ion-buttons>
+    <ion-back-button mode="md" defaultHref="/home/list-province"></ion-back-button>
+  </ion-buttons>
+  <!--  Title and Subtitle  -->
+  <div class="ion-padding-start">
+    <h1 class=" ion-text-uppercase">BATIK {{provinceName}}</h1>
+  </div>
+
+  <ion-card *ngFor="let batikProvince of provinceDetail" [routerLink]="['/home/list-batik/' + batikProvince.batik_id]">
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-thumbnail><img src="{{batikProvince.batik_image}}"></ion-thumbnail>
+      <div class="ion-nowrap ion-padding">
+        <ion-label><b>{{batikProvince.batik_name}}</b></ion-label>
+      </div>
+    </ion-item>
+  </ion-card>
+</ion-content>

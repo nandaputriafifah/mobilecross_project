@@ -18,13 +18,4 @@ export class BatikService {
   getAllBatik(): AngularFireList<Batik> {
     return this.batikRef;
   }
-
-  // getBatik(){
-  //   return new Promise<any>((resolve, reject) => {
-  //     this.db.list(this.dbPath).snapshotChanges()
-  //         .subscribe(snapshots => {
-  //           resolve(snapshots)
-  //         })
-  //   })
-  // }
 }

@@ -1,4 +1,4 @@
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" mode="ios">
 
   <!--  Title and Subtitle  -->
   <div class="ion-padding-start">
@@ -9,7 +9,10 @@
 
   <!--  Card in Games -->
   <ion-card>
-    <img src="assets/images/img-card-quiz-page.png">
+    <p align="center">
+      <img style="align-items: center;" src="assets/images/img-card-quiz-page.png">
+    </p>
+    
   </ion-card>
 
   <!-- USER NOT LOGGED IN -->
@@ -28,6 +31,6 @@
   <ion-button
           *ngIf="authService.isLoggedIn === true"
           color="secondary"
-          href="/home/tabs/games/game-detail">Mainkan sekarang!</ion-button>
+          (click)="presentLoading()">Mainkan sekarang!</ion-button>
 </ion-content>
 

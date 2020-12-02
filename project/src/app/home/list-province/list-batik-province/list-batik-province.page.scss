@@ -25,13 +25,10 @@ span {
   font-size: 17px;
 }
 
-img {
-  size: 10px;
-  display: flex;
-  align-content: flex-end;
-}
-
-.input-field{
-  height: 45px;
-  border-radius: 20px;
+ion-thumbnail {
+  width: 85px;
+  height: 75px;
+  img {
+    border-radius: 15px;
+  }
 }
