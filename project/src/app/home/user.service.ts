@@ -18,26 +18,4 @@ export class UserService {
   getAllUsers(): AngularFireList<User> {
     return this.userRef;
   }
-
-  // getUsers(){
-
-  //   let users: Array <{username: string,total_points: Number}>;
-  //   this.userRef.on('value',userSnapshot =>{ // you need to define your item Ref as a global variable in this service
-  //     userSnapshot.forEach( userSnap => {
-  //       this.users.push(userSnap.val());
-  //     });
-  //       this.sortUsers(users);
-  //   });
-  // }
-
-  // sortUsers(users) {
-  //   this.sortedArray = users.sort(function(a, b) {
-  //     return b.total_points - a.total_points // descending
-  //     //return a.total_points - b.total_points // accending
-  //   });
-  // }
-
-  // getUserPosition(user){ 
-  //   this.currentUserPosition = this.sortedArray.map(function (x) { return x.username}).indexOf(user.username);
-  // }
 }

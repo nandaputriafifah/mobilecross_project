@@ -1,9 +1,39 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>leaderboard</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding">
+  <!--  Title and Subtitle  -->
+  <div class="ion-padding-start">
+   <h1><b>PAPAN PERINGKAT</b></h1>
+   <span>Cek poin tertinggi mu sekarang juga!</span>
+ </div>
+ <br>
+ <div class="ion-padding-top">
+   <ion-grid>
+     <ion-row>
+       <ion-col style="text-align: center;">
+         <ion-text color="primary"><h5><b>No.</b></h5></ion-text>
+       </ion-col>
+       <ion-col style="text-align: center;" size="8">
+         <ion-text color="primary"> <h5><b>Username</b></h5></ion-text>
+       </ion-col>
+       <ion-col style="text-align: center;">
+         <ion-text color="primary"><h5><b>Poin</b></h5></ion-text>
+       </ion-col>
+     </ion-row>
+   </ion-grid>
+ </div>
 
-<ion-content>
-
+ <ion-card *ngFor="let user of users; let i = index">
+   <ion-grid>
+     <ion-row>
+       <ion-col style="text-align: center;" >
+         <h5><b>{{ i + 1 }}</b></h5>
+       </ion-col>
+       <ion-col style= "text-align: center;" size="8" >
+         <h5><b>{{ user.usernames }}</b></h5>
+       </ion-col>
+       <ion-col style="text-align: center;">
+         <ion-text color="danger"><h5><b>{{ user.total_points }}</b></h5></ion-text>
+       </ion-col>
+     </ion-row>
+   </ion-grid>
+ </ion-card>
 </ion-content>
