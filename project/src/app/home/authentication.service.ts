@@ -1,16 +1,19 @@
 import {Injectable, NgZone} from '@angular/core';
-import {AngularFireAuth} from "@angular/fire/auth";
-import {AngularFirestore, AngularFirestoreDocument} from "@angular/fire/firestore";
-import {Router} from "@angular/router";
-// import {User} from "./user";
+import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
+import {Router} from '@angular/router';
+import {User} from './user';
 import firebase from 'firebase';
+import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
+// import {auth} from 'firebase/app';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
   userData: any;
-
+  userRef: AngularFireList<User> = null;
   // getting from database
   user_id;
   email;
@@ -19,20 +22,22 @@ export class AuthenticationService {
   name;
   id;
 
-
-  // getting data from users table
-  users_array = [];
-  usernames_table;
-  names_table;
-  emails_table;
-  password_table;
+  // // getting data from users table
+  // users_array = [];
+  // usernames_table;
+  // names_table;
+  // emails_table;
+  // password_table;
+  private afAuth: any;
 
   constructor(
       public afStore: AngularFirestore,
       public ngFireAuth: AngularFireAuth,
       public router: Router,
-      public ngZone: NgZone
+      public ngZone: NgZone,
+      public db: AngularFireDatabase
   ) {
+    this.userRef = db.list('users/');
     this.ngFireAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
@@ -50,6 +55,11 @@ export class AuthenticationService {
     return this.ngFireAuth.signInWithEmailAndPassword(email, password)
   }
 
+  // Register user with email/password
+  // RegisterUser(email, password, name, username) {
+  //   return this.ngFireAuth.createUserWithEmailAndPassword(email, password)
+  // }
+
   RegisterUser(email, password, name, username) {
     return firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
       if (user) {
@@ -63,8 +73,7 @@ export class AuthenticationService {
           usernames: username,
           emails: email,
           total_points: 0,
-          photo_profile: null,
-          achivement: null
+          photo_profile: 'https://firebasestorage.googleapis.com/v0/b/baticca-755ef.appspot.com/o/Profile%2Fbalinese.svg?alt=media&token=ff7bf262-f05c-4780-ba9f-e7cac9a460ce'
         }, (error) => {
           if (error) {
             console.log(error);
@@ -114,6 +123,38 @@ export class AuthenticationService {
     return (user.emailVerified !== false) ? true : false;
   }
 
+  // Auth providers
+  // AuthLogin(provider) {
+  //   return this.ngFireAuth.signInWithPopup(provider)
+  //       .then((result) => {
+  //         this.ngZone.run(() => {
+  //           this.router.navigate(['dashboard']);
+  //         })
+  //         this.SetUserData(result.user);
+  //       }).catch((error) => {
+  //         window.alert(error)
+  //       })
+  // }
+
+  // Store user in localStorage
+  // SetUserData(user) {
+  //   const userRef: AngularFirestoreDocument<any> = this.afStore.doc(`users/${user.user_id}`);
+  //   const userData: User = {
+  //     user_id: user.user_id,
+  //     email: user.email,
+  //     name: user.name,
+  //     username: user.username,
+  //     emailVerified: user.emailVerified,
+  //     photo_profile: user.photo_profile,
+  //     user_point: user.user_point,
+  //     achivement: user.achivement,
+  //     total_correct_answer: user.total_correct_answer
+  //   }
+  //   return userRef.set(userData, {
+  //     merge: true
+  //   })
+  // }
+
   // Sign-out navigate to home landing page
   SignOut() {
     return this.ngFireAuth.signOut().then(() => {
@@ -122,9 +163,26 @@ export class AuthenticationService {
     });
   }
 
-  // Show user's information
-  userDetails() {
-    return this.ngFireAuth.user;
+  // // Show user's information
+  // userDetails() {
+  //   return this.ngFireAuth.user
+  // }
+
+  getUserData(): AngularFireList<User> {
+    return this.userRef;
   }
+
+  // // Profile reauth
+  // reAuth(username: string, password: string){
+  //   return this.afAuth.Auth.currentUser.reauthenticateWithCredential(auth.EmailAuthProvider.credential(username, password))
+  // }
+
+  // updatePassword(newpassword: string){
+  //   return this.afAuth.auth.currentUser.updatePassword(newpassword)
+  // }
+  //
+  // updateEmail(newemail: string){
+  //   return this.afAuth.Auth.currentUser.updateEmail(newemail)
+  // }
 
 }
