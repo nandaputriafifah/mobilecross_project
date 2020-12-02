@@ -73,8 +73,7 @@ export class AuthenticationService {
           usernames: username,
           emails: email,
           total_points: 0,
-          photo_profile: null,
-          achivement: null
+          photo_profile: 'https://firebasestorage.googleapis.com/v0/b/baticca-755ef.appspot.com/o/Profile%2Fbalinese.svg?alt=media&token=ff7bf262-f05c-4780-ba9f-e7cac9a460ce'
         }, (error) => {
           if (error) {
             console.log(error);
@@ -178,12 +177,12 @@ export class AuthenticationService {
   //   return this.afAuth.Auth.currentUser.reauthenticateWithCredential(auth.EmailAuthProvider.credential(username, password))
   // }
 
-  updatePassword(newpassword: string){
-    return this.afAuth.auth.currentUser.updatePassword(newpassword)
-  }
-
-  updateEmail(newemail: string){
-    return this.afAuth.Auth.currentUser.updateEmail(newemail)
-  }
+  // updatePassword(newpassword: string){
+  //   return this.afAuth.auth.currentUser.updatePassword(newpassword)
+  // }
+  //
+  // updateEmail(newemail: string){
+  //   return this.afAuth.Auth.currentUser.updateEmail(newemail)
+  // }
 
 }

@@ -1,11 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
-import {AlertController} from '@ionic/angular';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AngularFirestoreDocument} from '@angular/fire/firestore';
+import {AlertController, Platform} from '@ionic/angular';
 import {Router} from '@angular/router';
-import * as Http from 'http';
-import firebase from "firebase";
-import auth = firebase.auth;
-import {AuthenticationService} from "../authentication.service";
+import firebase from 'firebase';
+import {AuthenticationService} from '../authentication.service';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { map } from 'rxjs/operators';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {Camera, CameraResultType, CameraSource, Capacitor} from '@capacitor/core';
 
 @Component({
   selector: 'app-edit-profile',
@@ -13,93 +15,141 @@ import {AuthenticationService} from "../authentication.service";
   styleUrls: ['./edit-profile.page.scss'],
 })
 export class EditProfilePage implements OnInit {
+  @ViewChild('filePicker', { static: false }) filePickerRef: ElementRef<HTMLInputElement>;
+  photo: SafeResourceUrl;
+  isDesktop: boolean;
+
+  user_id: any;
+  userProfilePicture: any;
+  userName: any;
+
+  users: any;
+  userId: any;
+  names: any;
+  usernames: any;
+  profilePicture: any;
+  getPhoto: any;
 
   mainuser: AngularFirestoreDocument;
-  sub;
-  usernames: any;
-  profilePic: string;
 
   busy = false;
   password: any;
   newpassword: any;
 
-  @ViewChild('fileBtn') fileBtn: {
-    nativeElement: HTMLInputElement
-  };
-
   constructor(
-      // private http: Http,
-      private afs: AngularFirestore,
       private alertController: AlertController,
       private user: AuthenticationService,
-      private router:Router
-  ) {
-    // this.mainuser = afs.doc('users/${user.getUID()}')
-    // this.sub = this.mainuser.valueChanges().subscribe(event => {
-    //   this.usernames = event.usernames
-    //   this.profilePic = event.profilePic
-    // })
-  }
+      private router: Router,
+      private authService: AuthenticationService,
+      private afDatabase: AngularFireDatabase,
+      private alertCtrl: AlertController,
+      private platform: Platform,
+      private sanitizer: DomSanitizer
+  ) { }
 
   ngOnInit() {
+
+    if ((this.platform.is('mobile') && this.platform.is('hybrid')) ||
+        this.platform.is('desktop')) {
+      this.isDesktop = true;
+    }
+
+    this.authService.getUserData().snapshotChanges().pipe(
+        map(changes =>
+            changes.map(c => ({user_id: c.payload.key, ...c.payload.val()}))
+        )
+    ).subscribe(() => {
+      this.userId = firebase.auth().currentUser.uid;
+      console.log('USER ID CURRENT', this.userId);
+      this.afDatabase.database.ref('users/' + this.userId).once('value').then( userDetailsAsObject => {
+
+        this.names = userDetailsAsObject.val().names;
+        this.usernames = userDetailsAsObject.val().usernames;
+        this.profilePicture = userDetailsAsObject.val().photo_profile;
+
+      }).catch( err => {
+        console.log('Error pulling /profile');
+        console.log(err);
+      });
+    });
   }
 
-  updateProfilePic(){
-    this.fileBtn.nativeElement.click()
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Perbarui foto profil',
+      buttons: [
+        {
+          text: 'AMBIL FOTO',
+          handler: () => this.getPicture('camera')
+        },
+      ]
+    });
+
+    await alert.present();
   }
 
-  uploadPic(event){
-    const files = event.target.files
+  async getPicture(type: string){
+    if ((!Capacitor.isPluginAvailable('Camera')) || (this.isDesktop && type === 'gallery')) {
+      this.filePickerRef.nativeElement.click();
+      return;
+    }
 
-    const data = new FormData()
-    data.append('file', files[0])
-    data.append('UPLLOADCARE_STORE', '1')
-    data.append('UPLOADCARE_PUB_KEY', 'afbd4c71936aaa1d862f');
+    const image = await Camera.getPhoto({
+      quality: 100,
+      width: 400,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Prompt
+    });
 
-    // this.http.post('https://upload.uploadcare.com/base/', data)
-    //     .subscribe(event => {
-    //         const uuid = event.json().file
-    //       this.mainuser.update({
-    //         profilePic: uuid
-    //       })
-    //     })
-  }
-  async presentAler(title: string, content: string){
-    let alett: any;
-    // alett = await;
+    this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
+    this.getPhoto = image.dataUrl;
+
   }
 
-  // async updateDetails() {
-  //   this.busy = true
-  //
-  //   if (this.password){
-  //     return this.presentAler('Error!', 'Masukan Password');
-  //   }
-  //   try {
-  //     await this.user.reAuth(this.user.getUsername(), this.password);
-  //   }catch (error){
-  //     return this.presentAler('Error!', 'Password salah!');
-  //   }
-  //   if (this.newpassword){
-  //     await this.user.updatePassword(this.newpassword);
-  //   }
-  //
-  //   if (this.usernames !== this.user.getUsernames()){
-  //     await this.user.updateEmail(this.usernames);
-  //     this.mainuser.update({
-  //       username: this.usernames
-  //     });
-  //   }
-  //
-  //   this.password = '';
-  //   this.newpassword = '';
-  //   this.busy = false;
-  //
-  //   await this.presentAler('Done!', 'Profile telah diperbarui');
-  //
-  //   this.router.navigate(['home']);
-  // }
+  onFileChoose(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    const pattern = /image-*/;
+    const reader = new FileReader();
 
+    if (!file.type.match(pattern)) {
+      console.log('File format not supported');
+      return;
+    }
+
+    reader.onload = () => {
+      this.photo = reader.result.toString();
+    };
+    reader.readAsDataURL(file);
+
+  }
+
+  updateDetails(name, username) {
+   firebase.auth().onAuthStateChanged((user) => {
+     if (user) {
+       // User logged in already or has just logged in.
+       this.user_id = user.uid;
+
+       if (!this.getPhoto) {
+         firebase.database().ref('users/' + this.user_id ).update({
+           names: name.value,
+           usernames: username.value
+         });
+       } else if (this.getPhoto){
+         firebase.database().ref('users/' + this.user_id ).update({
+           photo_profile: this.getPhoto,
+           names: name.value,
+           usernames: username.value
+         });
+       }
+
+       this.router.navigateByUrl('/home/tabs/profile');
+     } else {
+       // User not logged in or has just logged out.
+     }
+   });
+
+  }
 }
 
 
