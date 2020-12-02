@@ -1,27 +1,41 @@
-<ion-content mode="ios">
+<ion-content mode="ios" #content>
+
   <!-- Score and Question Description -->
   <ion-grid class="ion-no-padding">
     <ion-row>
-      <ion-col size="1.5">
-        <ion-buttons>
-          <ion-back-button class="text-title" mode="md" defaultHref="/home/tabs/games"></ion-back-button>
-        </ion-buttons>
+      <ion-col size="4">
       </ion-col>
-      <ion-col size="9">
+      <ion-col size="4.5">
         <div class="ion-text-center ion-padding text-score">
           <ion-label class="text-title">SKOR: {{score}}</ion-label>
         </div>
       </ion-col>
+      <ion-col size="3.5">
+        <ion-buttons class="ion-padding">
+          <ion-button (click)="presentAlert()"
+                      style="color: white;">
+            <ion-icon name="exit-outline" style="width: 100px;"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
     </ion-row>
 
+    <!-- Each question will show by each slide -->
     <ion-slides #quizSlider
                 (ionSlidesDidLoad)="getIndexSlideChanged()"
-                (ionSlideWillChange)="getIndexSlideChanged(); enabledChoices(); hideAnswer()">
+                (ionSlideWillChange)="
+                getIndexSlideChanged();
+                enabledChoices();
+                hideAnswer();
+                scrollToTop();
+                 disabledSubmitButton()">
     <ion-slide *ngFor="let quiz of quizes">
+
       <div class="ion-text-center">
         <ion-label class="text-title">Pertanyaan {{index}}/10</ion-label>
-        <ion-card>
 
+        <!-- Image and question -->
+        <ion-card>
           <ion-card-header>
            <img src="{{quiz.quiz_image}}">
           </ion-card-header>
@@ -189,49 +203,104 @@
             </ion-radio-group>
           </ion-list>
 
+          <!--   Button to get score by getQuizResult() and show answer by showAnswer()  -->
           <ion-button type="submit"
-                      shape="round"
-                      (click)="getQuizResult(); disabledChoices(); showAnswer()"
+                      *ngIf="doDisabledSubmitButton"
+                      (click)="getQuizResult(); disabledChoices(); showAnswer(); hideSubmitButton();"
                       [disabled]="!quizCtrl.valid"
-                      disabled="{{doDisabled}}">
-            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                      disabled="{{!doDisabledSubmitButton}}">KIRIM
           </ion-button>
 
-            <br><br>
-            <ion-item *ngIf="selectedChoice === quiz.answer && show">
-                JAWABAN KAMU BENAR! <br>
-               {{quiz.answer_description}}
-
-              <ion-button type="submit"
-                          shape="round"
-                          (click)="swipeNext()"
-                          [disabled]="!quizCtrl.valid"> Berikutnya
-                <ion-icon class="ion-padding-start" name="arrow-forward-circle-outline"></ion-icon>
-              </ion-button>
-
-            </ion-item>
-
-            <ion-item *ngIf="selectedChoice !== quiz.answer && show">
-                SALAH <br>
-                JAWABAN: {{quiz.answer}} <br>
-                {{quiz.answer_description}}
-
-              <ion-button type="submit"
-                          shape="round"
-                          (click)="swipeNext()"
-                          [disabled]="!quizCtrl.valid"> Berikutnya
-                <ion-icon class="ion-padding-start" name="arrow-forward-circle-outline"></ion-icon>
-              </ion-button>
-            </ion-item>
-
-          <ion-button type="submit"
-                      (click)="postScoreToFirebase()"
-                      *ngIf="index === quizes.length"
-                      href="/home/results">
-            DONE
-          </ion-button>
             <br><br>
         </ion-card>
+
+        <!--   Scroll to bottom to see answer description -->
+        <div class="next-button">
+          <ion-buttons>
+            <ion-button *ngIf="selectedChoice === quiz.answer && show"
+                        (click)="scrollToBottom()"
+                        style="color: white">
+              <ion-icon name="arrow-down-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+
+          <ion-buttons>
+            <ion-button *ngIf="selectedChoice !== quiz.answer && show"
+                        (click)="scrollToBottom()"
+                        style="color: white">
+              <ion-icon name="arrow-down-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div>
+
+        <!--   Answer description -->
+        <!--   Correct answer -->
+        <ion-card>
+          <ion-item *ngIf="selectedChoice === quiz.answer && show">
+            <div class="ion-nowrap">
+
+              <ion-card-header>
+                <ion-card-title style="color: #283618;"> JAWABAN KAMU BENAR! </ion-card-title>
+              </ion-card-header>
+
+              <ion-card-content>
+                {{quiz.answer_description}}
+              </ion-card-content>
+            </div>
+
+          </ion-item>
+
+          <!--   False answer  -->
+          <ion-item *ngIf="selectedChoice !== quiz.answer && show">
+            <div class="ion-nowrap">
+              <ion-card-header>
+                <ion-card-title style="color: #bf382e;"> JAWABAN KAMU SALAH </ion-card-title>
+                <ion-card-subtitle>JAWABAN: {{quiz.answer}}</ion-card-subtitle>
+              </ion-card-header>
+
+              <ion-card-content>
+                {{quiz.answer_description}}
+              </ion-card-content>
+            </div>
+          </ion-item>
+        </ion-card>
+
+        <!--  Button to post score value into database  -->
+        <div class="submit-button" *ngIf="show">
+          <ion-button type="submit"
+                      (click)="postScoreToFirebase();presentLoading()"
+                      *ngIf="index === quizes.length"
+                      shape="round"
+                      style="height: 40px;width: 180px;font-size: 17px;">LIHAT HASIL!
+          </ion-button>
+        </div>
+
+
+        <div class="next-button" *ngIf="selectedChoice === quiz.answer && show">
+          <ion-buttons>
+            <ion-button type="submit"
+                        shape="round"
+                        *ngIf="index !== quizes.length"
+                        (click)="swipeNext()"
+                        [disabled]="!quizCtrl.valid"
+                        style="height: 30px;color: white;"> Berikutnya
+              <ion-icon  class="ion-padding-start" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div> <br>
+
+        <div class="next-button" *ngIf="selectedChoice !== quiz.answer && show">
+          <ion-buttons>
+            <ion-button type="submit"
+                        shape="round"
+                        *ngIf="index !== quizes.length"
+                        (click)="swipeNext()"
+                        [disabled]="!quizCtrl.valid"
+                        style="height: 30px;color: white;"> Berikutnya
+              <ion-icon  class="ion-padding-start" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div> <br>
       </div>
     </ion-slide>
     </ion-slides>

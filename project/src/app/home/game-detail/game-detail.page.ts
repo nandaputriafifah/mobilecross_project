@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {GameService} from "../game.service";
-import {ActivatedRoute} from "@angular/router";
-import {map} from "rxjs/operators";
-import {IonSlides} from "@ionic/angular";
-import firebase from "firebase";
-import {AngularFireDatabase} from "@angular/fire/database";
+import {GameService} from '../game.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {map} from 'rxjs/operators';
+import {AlertController, IonContent, IonSlides, LoadingController} from '@ionic/angular';
+import firebase from 'firebase';
+import {AngularFireDatabase} from '@angular/fire/database';
 
 @Component({
   selector: 'app-game-detail',
@@ -15,11 +15,12 @@ export class GameDetailPage implements OnInit {
   quizes: any;
   selectedChoice: string;
   selectedQuestion: string;
-  score: number = 0;
+  score = 0;
   index: number;
   quizTimeLimit: number;
   show: boolean;
   doDisabled: boolean;
+  doDisabledSubmitButton: boolean;
   user_id: string;
 
   totalPoints: any;
@@ -27,17 +28,21 @@ export class GameDetailPage implements OnInit {
 
   today = new Date();
   todaysDay = String(this.today.getDate()).padStart(2, '0');
-  todaysMonth = String(this.today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  todaysMonth = String(this.today.getMonth() + 1).padStart(2, '0'); // January is 0!
   todaysYear = this.today.getFullYear();
   todaysHour = this.today.getHours();
-  todaysMinute= this.today.getMinutes();
+  todaysMinute = this.today.getMinutes();
 
   @ViewChild('quizSlider') slide: IonSlides;
+  @ViewChild('content', { static: false }) content: IonContent;
 
   constructor(
       public gameService: GameService,
       public router: ActivatedRoute,
-      public afDatabase: AngularFireDatabase
+      public afDatabase: AngularFireDatabase,
+      private loadingCtrl: LoadingController,
+      private alertCtrl: AlertController,
+      private route: Router
   ) {
   }
 
@@ -70,6 +75,15 @@ export class GameDetailPage implements OnInit {
 
     this.doDisabled = false;
     this.show = false;
+    this.doDisabledSubmitButton = true;
+  }
+
+  scrollToBottom() {
+    this.content.scrollToBottom(300);
+  }
+
+  scrollToTop() {
+    this.content.scrollToTop(300);
   }
 
   swipeNext(){
@@ -77,6 +91,7 @@ export class GameDetailPage implements OnInit {
     this.slide.lockSwipeToPrev(true);
   }
 
+  // Get value of choice selected
   choiceSelected(event, question) {
     console.log('====== CHOICE SELECTED', event.detail.value);
     console.log('====== CHOICE DETAIL', event.detail);
@@ -87,6 +102,7 @@ export class GameDetailPage implements OnInit {
 
   }
 
+  // This to get index of current slides
   getIndexSlideChanged() {
     this.slide.getActiveIndex().then(index => {
       this.index = index + 1;
@@ -100,6 +116,7 @@ export class GameDetailPage implements OnInit {
 
     for (let questionLength = 0; questionLength < this.quizes.length; questionLength++) {
         if (this.selectedChoice === this.quizes[questionLength].answer) {
+          // Add score + 10 if selected choice is equal to answer
           this.score = this.score + 10;
           console.log('SCOREEE', this.score);
         }
@@ -122,6 +139,14 @@ export class GameDetailPage implements OnInit {
     this.doDisabled = false;
   }
 
+  disabledSubmitButton() {
+    this.doDisabledSubmitButton = true;
+  }
+
+  hideSubmitButton() {
+    this.doDisabledSubmitButton = false;
+  }
+
 
   postScoreToFirebase() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -129,17 +154,20 @@ export class GameDetailPage implements OnInit {
         // User logged in already or has just logged in.
         this.user_id = user.uid;
         console.log('===USER ID===', this.user_id);
+        // This for post quiz history to field quiz_history in firebase
         firebase.database().ref('users/' + this.user_id + '/quiz_history').push({
           quiz_date: `${this.todaysDay}/${this.todaysMonth}/${this.todaysYear} ${this.todaysHour}:${this.todaysMinute}`,
           user_score: this.score,
           user_point: this.score / 10
         });
 
+        // This for post score and point after played quiz to field points in firebase
         firebase.database().ref('users/' + this.user_id + '/points').set({
           user_score: this.score,
           user_point: this.score / 10
         });
 
+        // This for update total_points for user
         firebase.database().ref('users/' + this.user_id ).update({
           total_points: this.totalPoints += this.score / 10
         });
@@ -149,27 +177,64 @@ export class GameDetailPage implements OnInit {
     });
   }
 
-  /** TO DO: Add time limit
-  runTimeLimit() {
-    console.log('RUN', this.selectedChoice);
-    if (typeof this.selectedChoice === 'undefined') {
-      for (let index = 0; index <= 100; index++) {
-        if (typeof this.selectedChoice !== 'undefined'){
-          this.setPercentBar(0);
-          break;
-        }
-        this.setPercentBar(+index);
-      }
-    } else if (typeof this.selectedChoice !== 'undefined'){
-      this.setPercentBar(0);
-    }
+  async presentLoading() {
+    const loading = await this.loadingCtrl.create({
+      cssClass: 'my-custom-class',
+      spinner: 'dots',
+      message: 'Mempersiapkan hasil kuis...',
+      duration: 4000
+    });
+    await loading.present();
+
+    await loading.onDidDismiss().then( () => {
+      this.route.navigateByUrl('/home/results');
+      console.log('Loading dismissed!');
+    });
   }
-   setPercentBar(i) {
-    setTimeout(() => {
-      let apc = (i / 100)
-      console.log(apc);
-      this.quizTimeLimit = apc;
-    }, 150 * i);
+
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'KELUAR KUIS',
+      message: 'Apakah kamu yakin ingin <br> mengakhiri kuis?',
+      buttons: [
+        {
+          text: 'YA',
+          handler: () =>
+              this.presentLoading().then(() => {
+                this.postScoreToFirebase();
+                this.route.navigateByUrl('/home/results');
+              })
+        },
+        {
+          text: 'TIDAK',
+          role: 'cancel'
+        },
+      ]
+    });
+
+    await alert.present();
   }
-   **/
+
+  // TO DO: Add time limit
+  // runTimeLimit() {
+  //   console.log('RUN', this.selectedChoice);
+  //   if (typeof this.selectedChoice === 'undefined') {
+  //     for (let index = 0; index <= 100; index++) {
+  //       if (typeof this.selectedChoice !== 'undefined'){
+  //         this.setPercentBar(0);
+  //         break;
+  //       }
+  //       this.setPercentBar(+index);
+  //     }
+  //   } else if (typeof this.selectedChoice !== 'undefined'){
+  //     this.setPercentBar(0);
+  //   }
+  // }
+  //  setPercentBar(i) {
+  //   setTimeout(() => {
+  //     let apc = (i / 100)
+  //     console.log(apc);
+  //     this.quizTimeLimit = apc;
+  //   }, 150 * i);
+  // }
 }

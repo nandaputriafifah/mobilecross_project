@@ -1,11 +1,50 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>results</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding" mode="ios">
+  <!--  Title and Subtitle  -->
+  <div class="ion-padding-start" *ngIf="userScores === 100">
+    <h1>SEMPURNA!</h1>
+    <span>Kamu sudah selesaikan<br> kuis dengan sempurna</span>
+  </div>
 
-<ion-content>
-  <p>Point - {{userPoints}}</p>
-  <p>Score - {{userScores}}</p>
+  <div class="ion-padding-start" *ngIf="userScores >= 70 && userScores <= 90">
+    <h1>SELAMAT!</h1>
+    <span>Kamu sudah selesaikan<br> kuis dengan baik</span>
+  </div>
+
+  <div class="ion-padding-start" *ngIf="userScores <= 60">
+    <h1>YUK COBA LAGI!</h1>
+    <span>Tak perlu gundah,<br> yuk kita coba main lagi</span>
+  </div>
+  <br><br><br>
+
+  <div class="ion-nowrap">
+    <img *ngIf="userScores >= 70" src="assets/images/result.png">
+
+    <img *ngIf="userScores < 70" src="assets/images/result_fail.png">
+
+    <ion-card style="text-align: center" class="ion-padding">
+      <ion-card-subtitle>Skor</ion-card-subtitle>
+      <ion-card-title class="title-size">
+        <mark class="primary">{{userScores}}</mark>/100
+      </ion-card-title>
+    </ion-card>
+
+    <ion-card style="text-align: center" class="ion-padding">
+      <ion-card-subtitle>Poin</ion-card-subtitle>
+      <ion-card-title class="title-size">
+        <mark class="primary">+ {{userPoints}}</mark>
+      </ion-card-title>
+    </ion-card>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button color="secondary" href="/home/game-detail">Main lagi!</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button href="/home/tabs/games">Kembali</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 
 </ion-content>

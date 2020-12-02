@@ -31,15 +31,15 @@ ion-card {
   }
 
   .card-choices {
-    width: 330px;
+    width: 300px;
   }
 
   .card-choices-correct{
-    width: 330px;
+    width: 300px;
   }
 
   .card-choices-false{
-    width: 330px;
+    width: 300px;
   }
 }
 
@@ -97,7 +97,7 @@ ion-item:active {
   border-radius: 20px;
   --ion-background-color: #283618;
   ion-radio {
-    --color-checked: white;
+    --color-checked: #283618;
   }
 }
 
@@ -108,5 +108,15 @@ ion-item:active {
   ion-radio {
     --color-checked: #bf382e;
   }
+}
+
+.next-button {
+  display: flex;
+  justify-content: center;
+}
+
+.submit-button {
+  display: flex;
+  justify-content: center;
 }
 

@@ -22,7 +22,7 @@ export class ProfilePage implements OnInit {
       }
     }, err => {
       console.log('err', err);
-    })
+    });
   }
 
 }
