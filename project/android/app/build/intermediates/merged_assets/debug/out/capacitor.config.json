@@ -1,0 +1,13 @@
+{
+  "appId": "umn.ac.id.baticca",
+  "appName": "Baticca",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}
