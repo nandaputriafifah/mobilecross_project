@@ -1,29 +1,22 @@
-.header {
-  width: 100%;
-}
-
-//ion-content {
-//
-//  background-image : "https://firebasestorage.googleapis.com/v0/b/baticca-755ef.appspot.com/o/Logo%2FVirtual%20Background%20Zoom%20-%20Peserta.png?alt=media&token=0b5f466a-7279-45de-9ef6-0a80c93dd065";
-//}
-
 img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 300px;
+  width: 200px;
 }
-//.main-image, . user-image{
-//  width: 200px;
-//  height: 200px;
-//}
 
 .center {
   display: block;
-  margin: auto;
-  width: 200px;
-  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
+.center-container {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .login-button {
@@ -50,18 +43,8 @@ span {
 }
 
 .field-user {
-  height: 40px;
+  width: 100%;
+  height: 45px;
   border-radius: 20px;
 }
 
-//ion-slide:first-child {
-//  margin-left: -10px;
-//}
-
-//ion-slides {
-//  padding-top: 12px;
-//}
-//
-//ion-slides:last-child{
-//  margin-right: -50px;
-//}
