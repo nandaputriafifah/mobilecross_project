@@ -9,15 +9,19 @@
 
 <ion-content>
     <app-loading *ngIf="busy"></app-loading>
-    <div>
-        <ion-img *ngIf="!photo" (click)="presentAlert()" src="{{profilePicture}}"></ion-img>
-        <ion-card *ngIf="photo" (click)="presentAlert()">
-            <ion-card-content>
-                <img [src]="photo">
-            </ion-card-content>
-        </ion-card>
-    </div>
+   <ion-grid *ngIf="!photo">
+       <ion-row>
+           <ion-avatar style="width: 180px;height: 180px;" class="ion-text-center center">
+               <ion-img (click)="presentAlert()" src="{{profilePicture}}"></ion-img>
+           </ion-avatar>
+       </ion-row>
+   </ion-grid>
 
+    <ion-card *ngIf="photo" (click)="presentAlert()" class="ion-text-center center">
+        <ion-card-content>
+            <img [src]="photo">
+        </ion-card-content>
+    </ion-card>
 
     <div class="profile-info">
         <ion-item>

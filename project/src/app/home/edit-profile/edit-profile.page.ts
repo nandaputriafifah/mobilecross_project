@@ -63,7 +63,7 @@ export class EditProfilePage implements OnInit {
       console.log('USER ID CURRENT', this.userId);
       this.afDatabase.database.ref('users/' + this.userId).once('value').then( userDetailsAsObject => {
 
-        this.names = userDetailsAsObject.val().names;
+        this.names = userDetailsAsObject.val().name;
         this.usernames = userDetailsAsObject.val().usernames;
         this.profilePicture = userDetailsAsObject.val().photo_profile;
 
